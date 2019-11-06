@@ -57,7 +57,8 @@ app.use(passport.session());
 //routers
 app.use('/xxx', (req, res) => {
   return res.send('hello world');
-})
+});
+
 app.use('/users', require('./routers/users'));
 app.use('/benefits', require('./routers/benefits'));
 app.use('/positions', require('./routers/positions'));

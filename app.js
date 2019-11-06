@@ -9,11 +9,6 @@ const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
 
 //connect mongo
-
-app.use('/xxx', (req, res) => {
-  console.log(process.env.NODE_ENV);
-  return res.send('hello world');
-});
 !process.env.NODE_ENV && (process.env.NODE_ENV = 'dev');
 require(`./configs/${process.env.NODE_ENV}.js`);
 

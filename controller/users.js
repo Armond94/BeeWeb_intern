@@ -1,3 +1,5 @@
+const passport = require('passport');
+
 class UsersController {
 
   async getUser (req, res) {

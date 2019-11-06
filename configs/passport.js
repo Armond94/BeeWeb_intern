@@ -7,7 +7,6 @@ const User = require('../models/users');
 module.exports = function (passport) {
   passport.use(
     new LocalStrategy({usernameField: 'email'}, async (email, password, done) => {
-      console.log('email password', email, password);
       let user = await User.findOne({email});
       try {
         if (!user) {

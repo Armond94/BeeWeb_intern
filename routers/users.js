@@ -31,7 +31,7 @@ router.post('/login', controller.login);
 // change user
 router.put('/:id', controller.changeUser);
 
-// delete user
+// delete  user
 router.delete('/', controller.deleteUser);
 
 module.exports = router;

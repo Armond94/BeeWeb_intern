@@ -1,4 +1,5 @@
-const passport = require('passport'); 
+const passport = require('passport');
+
 class UsersController {
 
   async getUser (req, res) {
@@ -29,7 +30,7 @@ class UsersController {
 
     try {
       let user = await req.app.services.users.createUser(firstName, lastName, email, role, birthday, phoneNumber, password);
-      res.status(200).send(user);
+      res.status(200).redirect('/users/login');
     } catch (err) {
       res.status(500).send(err.message);
     }
@@ -55,6 +56,7 @@ class UsersController {
   };
 
   login (req, res, next) {
+
     passport.authenticate('local', {
       successRedirect: '/users/dashboard',
       failureRedirect: '/users/login'

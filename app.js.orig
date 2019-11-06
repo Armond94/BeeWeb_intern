@@ -1,8 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 //home_work branch
 =======
-//master branch
-//marster branch1
+//master branch 1
+>>>>>>> master
+=======
+//master branch (second time)
 >>>>>>> master
 const express = require('express');
 const app = express();

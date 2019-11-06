@@ -9,6 +9,10 @@ const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
 
 //connect mongo
+console.log(process.env.NODE_ENV);
+app.use('/xxx', (req, res) => {
+  return res.send('hello world');
+});
 !process.env.NODE_ENV && (process.env.NODE_ENV = 'dev');
 require(`./configs/${process.env.NODE_ENV}.js`);
 
@@ -55,9 +59,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routers
-app.use('/xxx', (req, res) => {
-  return res.send('hello world');
-});
+
 
 app.use('/users', require('./routers/users'));
 app.use('/benefits', require('./routers/benefits'));

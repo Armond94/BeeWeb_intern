@@ -34,14 +34,14 @@ class UserServices {
     let newUser = new this.models.users({firstName, lastName, email, role, birthday, phoneNumber, password});
 
     bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
+      bcrypt.hash(newUser.password, salt, async (err, hash) => {
         if (err) {
           throw err;
         }
         newUser.password = hash;
-        return newUser.save();
-      })
-    })
+        return await newUser.save();
+      });
+    });
   };
 
   changeUser (obj, _id) {

@@ -17,7 +17,7 @@ router.get('/dashboard', controller.userDashboardPage);
 router.get('/logout', controller.logout);
 
 // all users that have addBenefit(s)
-router.get('/benefits', controller.usersBenefits);
+router.get('/benefits/exists', controller.usersBenefits);
 
 // findUser
 router.get('/:id', controller.getUser);
@@ -33,5 +33,6 @@ router.put('/:id', controller.changeUser);
 
 // delete  user
 router.delete('/', controller.deleteUser);
+
 
 module.exports = router;

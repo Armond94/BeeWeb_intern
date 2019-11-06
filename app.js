@@ -1,14 +1,11 @@
-//master branch (second time)
-<<<<<<< HEAD
-//home_work branch
-=======
->>>>>>> master
+//master branch (third time)
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-//front
+
+//front-end
 const expressLayouts = require('express-ejs-layouts');
 
 //connect mongo

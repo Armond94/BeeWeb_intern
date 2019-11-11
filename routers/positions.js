@@ -1,16 +1,23 @@
-const router = require('express').Router();
-const PositionsController = require('../controller/positions');
+import express from 'express';
+import PositionsController from '../controller/positions';
+import ensureAuthenticated from '../configs/auth';
+const router = express.Router();
 const controller = new PositionsController();
-const { ensureAuthenticated } = require('../configs/auth');
 
-router.get('', controller.getPosition);
+//get position by id
+router.get('/:id', controller.getPosition);
 
+//get all positions
 router.get('', controller.getPositions);
 
-router.post('', controller.createPosition);
+//create position
+router.post('', ensureAuthenticated, controller.createPosition);
 
-router.put('', controller.changePosition);
+//change position
+router.put('', ensureAuthenticated, controller.changePosition);
 
-router.delete('', controller.deletePosition);
+//delete position
+router.delete('', ensureAuthenticated, controller.deletePosition);
 
+// export default router;
 module.exports = router;

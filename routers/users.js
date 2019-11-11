@@ -1,38 +1,35 @@
-const router = require('express').Router();
-const passport = require('passport');
-const UsersController = require('../controller/users');
+import express from 'express';
+import UsersController from '../controller/users';
+import ensureAuthenticated from '../configs/auth';
 const controller = new UsersController();
-const { ensureAuthenticated } = require('../configs/auth');
+const router = express.Router();
 
-// login page
+// redirect login page
 router.get('/login', controller.loginPage);
 
-// user register Page
+// user redirect register Page
 router.get('/register', controller.registerPage);
 
-// user dashboard page
-router.get('/dashboard', controller.userDashboardPage);
+// find user by id
+router.get('/:id', ensureAuthenticated, controller.getUser);
 
-// logout
-router.get('/logout', controller.logout);
+// user redirect dashboard page
+router.get('/dashboard', ensureAuthenticated, controller.userDashboardPage);
 
 // all users that have addBenefit(s)
-router.get('/benefits/exists', controller.usersBenefits);
+router.get('/benefits/exists', ensureAuthenticated, controller.usersBenefits);
 
-// findUser
-router.get('/:id', controller.getUser);
-
-// registration
+// signup
 router.post('/register', controller.register);
 
-// login
+// signin
 router.post('/login', controller.login);
 
 // change user
-router.put('/:id', controller.changeUser);
+router.put('/:id', ensureAuthenticated, controller.changeUser);
 
 // delete  user
-router.delete('/', controller.deleteUser);
+router.delete('/:id', ensureAuthenticated, controller.deleteUser);
 
-
+// export default router;
 module.exports = router;

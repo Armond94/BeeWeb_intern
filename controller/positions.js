@@ -1,4 +1,5 @@
 class PositionsController {
+
   async getPosition (req, res) {
     try {
       let position = await req.app.services.positions.getPostition(req.params.id);

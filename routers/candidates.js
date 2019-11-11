@@ -1,16 +1,23 @@
-const router = require('express').Router();
-const CandidatesController = require('../controller/candidates');
+import express from 'express';
+import CandidatesController from '../controller/candidates';
+import ensureAuthenticated from '../configs/auth';
 const controller = new CandidatesController();
-const { ensureAuthenticated } = require('../configs/auth');
+const router = express.Router();
 
-router.get('', controller.getCandidate);
 
-router.get('', controller.getCandidates);
+//get candidate
+router.get('/:id', ensureAuthenticated, controller.getCandidate);
 
-router.post('/:id', controller.createCandidate);
+//get candidates
+router.get('', ensureAuthenticated, controller.getCandidates);
 
-router.put('', controller.changeCandidate);
+//create candidate
+router.post('', controller.createCandidate);
 
-router.delete('', controller.deleteCandidate);
+//change candidate
+router.put('/:id', ensureAuthenticated, controller.changeCandidate);
+
+//delete candidate
+router.delete('/:id', ensureAuthenticated, controller.deleteCandidate);
 
 module.exports = router;

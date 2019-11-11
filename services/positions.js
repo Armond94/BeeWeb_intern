@@ -1,4 +1,4 @@
-class positionServices {
+class PositionServices {
   constructor (models) {
     this.models = models
   };
@@ -42,4 +42,4 @@ class positionServices {
   };
 };
 
-module.exports = positionServices;
+module.exports = PositionServices;

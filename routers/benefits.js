@@ -1,24 +1,25 @@
-const router = require('express').Router();
-const BenefitsController = require('../controller/benefits');
+import express from 'express';
+import BenefitsController from '../controller/benefits';
+import ensureAuthenticated from '../configs/auth';
 const controller = new BenefitsController();
-const { ensureAuthenticated } = require('../configs/auth');
+const router = express.Router();
 
-//get benefit
-router.get('/:id', controller.getBenefit);
+//get benefit by id
+router.get('/:id', ensureAuthenticated, controller.getBenefit);
 
 //get benefits
-router.get('', controller.getBenefits);
+router.get('', ensureAuthenticated, controller.getBenefits);
 
 //create benefit
-router.post('', controller.createBenefit);
+router.post('', ensureAuthenticated, controller.createBenefit);
 
 // give benefit to user
-router.post('/user', controller.addBenefit);
+router.post('/user', ensureAuthenticated, controller.addBenefit);
 
 //change benefit
-router.put('/:id', controller.changeBenefit);
+router.put('/:id', ensureAuthenticated, controller.changeBenefit);
 
 //delete benefit
-router.delete('/:id', controller.deleteBenefit);
+router.delete('/:id', ensureAuthenticated, controller.deleteBenefit);
 
 module.exports = router;

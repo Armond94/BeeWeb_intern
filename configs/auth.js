@@ -1,8 +1,18 @@
-module.exports = {
-  ensureAuthenticated: function(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
+import jwt from 'jsonwebtoken';
+import users from '../models/users';
+import mongoose from 'mongoose';
+
+module.exports = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    if (!decoded) {
+      throw new Error('!sing in');
     }
-    res.redirect('/users/login');
+    let user = await users.findOne({_id: decoded.userId, deletedAt: null});
+    req.user = user;
+    next();
+  } catch (err) {
+    res.send(err.message);
   }
-};
+}

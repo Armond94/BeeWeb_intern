@@ -1,4 +1,4 @@
-class candidateServices {
+class CandidateServices {
   constructor(models) {
     this.models = models
   };
@@ -51,4 +51,4 @@ class candidateServices {
   };
 };
 
-module.exports = candidateServices;
+module.exports = CandidateServices;

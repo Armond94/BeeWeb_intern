@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 mongoose.set('useFindAndModify', false);
 //`mongodb://${process.env.mongo_host}:${process.env.mongo_port}/beeweb_intern`

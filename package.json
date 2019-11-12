@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Armond",
   "license": "ISC",
@@ -21,13 +22,6 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/node": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
-    "babel-preset-env": "^1.7.0",
     "nodemon": "^1.19.4"
   }
 }

@@ -1,7 +1,6 @@
-import express from 'express';
-import PositionsController from '../controller/positions';
-import ensureAuthenticated from '../configs/auth';
-const router = express.Router();
+const router = require('express').Router();
+const PositionsController = require('../controller/positions');
+const ensureAuthenticated = require('../configs/auth');
 const controller = new PositionsController();
 
 //get position by id

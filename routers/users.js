@@ -1,9 +1,7 @@
-import express from 'express';
-import UsersController from '../controller/users';
-import ensureAuthenticated from '../configs/auth';
+const router = require('express').Router();
+const UsersController = require('../controller/users');
+const ensureAuthenticated = require('../configs/auth');
 const controller = new UsersController();
-const router = express.Router();
-
 
 // find user by id
 router.get('/:id', ensureAuthenticated, controller.getUser);

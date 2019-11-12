@@ -1,8 +1,7 @@
-import express from 'express';
-import CandidatesController from '../controller/candidates';
-import ensureAuthenticated from '../configs/auth';
+const router = require('express').Router();
+const CandidatesController = require('../controller/candidates');
+const ensureAuthenticated = require('../configs/auth');
 const controller = new CandidatesController();
-const router = express.Router();
 
 
 //get candidate

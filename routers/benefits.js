@@ -1,8 +1,7 @@
-import express from 'express';
-import BenefitsController from '../controller/benefits';
-import ensureAuthenticated from '../configs/auth';
+const router = require('express').Router();
+const BenefitsController = require('../controller/benefits');
+const ensureAuthenticated = require('../configs/auth');
 const controller = new BenefitsController();
-const router = express.Router();
 
 //get benefit by id
 router.get('/:id', ensureAuthenticated, controller.getBenefit);

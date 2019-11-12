@@ -1,7 +1,7 @@
 //home_work branch (third time)
-import express from 'express';
-import bodyParser from 'body-parser';
-import Errors from './errors/errors';
+const express = require('express');
+const bodyParser = require('body-parser');
+const Errors = require('./errors/errors');
 const app = express();
 
 //connect mongo

@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import users from '../models/users';
-import mongoose from 'mongoose';
+const jwt = require('jsonwebtoken');
+const users = require('../models/users');
+const mongoose = require('mongoose');
 
 module.exports = async (req, res, next) => {
   try {

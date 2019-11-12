@@ -4,9 +4,6 @@ import bodyParser from 'body-parser';
 import Errors from './errors/errors';
 const app = express();
 
-//front-end
-const expressLayouts = require('express-ejs-layouts');
-
 //connect mongo
 process.env.NODE_ENV || (process.env.NODE_ENV = 'dev');
 require(`./configs/${process.env.NODE_ENV}.js`);
@@ -26,20 +23,16 @@ app.models = {
 
 // services
 app.services = {
-  users: new (require('./services/users'))(app.models),//users
-  benefits: new (require('./services/benefits'))(app.models),
-  positions: new (require('./services/positions'))(app.models),
-  candidates: new (require('./services/candidates'))(app.models)
+  users: new (require('./services/users'))(app.models, app),
+  benefits: new (require('./services/benefits'))(app.models, app),
+  positions: new (require('./services/positions'))(app.models, app),
+  candidates: new (require('./services/candidates'))(app.models, app)
 };
 
 app.use((req, res, next) => {
   req.app = app;
   next();
 });
-
-//front
-app.use(expressLayouts);
-app.set('view engine', 'ejs');
 
 //routers
 app.use('/users', require('./routers/users'));

@@ -23,13 +23,14 @@ class UsersController {
   //create user
   async register (req, res) {
     const { firstName, lastName, email, role, birthday, phoneNumber, password, password2 } = req.body;
+     // todo
     if (!firstName || !lastName || !role || !email || !birthday || !phoneNumber || !password || !password2 || password !== password2) {
       return res.send('please fill correct');
     }
     let userObject = {...req.body};
     try {
       let user = await req.app.services.users.createUser(req.user, userObject);
-      return res.status(200).redirect('/users/login');
+      return res.status(200).send('successfully registered');
     } catch (err) {
       res.status(500).send(err.message);
     }
@@ -64,23 +65,6 @@ class UsersController {
     } catch (err) {
       res.send(err.message);
     }
-  };
-
-  //redirect to dashbard page
-  userDashboardPage (req, res) {
-    //password@ jnjem
-    let user = req.user;
-    res.render('dashboard', {user});
-  };
-
-  //redirect to register page
-  registerPage (req, res) {
-    res.redirect('register')
-  };
-
-  //redirect to login page
-  loginPage (req, res) {
-    res.redirect('login')
   };
 };
 

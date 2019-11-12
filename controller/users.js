@@ -22,9 +22,9 @@ class UsersController {
 
   //create user
   async register (req, res) {
-    const { firstName, lastName, email, role, birthday, phoneNumber, password, password2 } = req.body;
+    const { firstName, lastName, email, role, birthday, phoneNumber, password, repeatPassword } = req.body;
      // todo
-    if (!firstName || !lastName || !role || !email || !birthday || !phoneNumber || !password || !password2 || password !== password2) {
+    if (!firstName || !lastName || !role || !email || !birthday || !phoneNumber || !password || !repeatPassword || password !== repeatPassword) {
       return res.send('please fill correct');
     }
     let userObject = {...req.body};

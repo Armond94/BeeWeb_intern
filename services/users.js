@@ -84,12 +84,12 @@ class UserServices {
         const hashedPassword = bcrypt.hashSync(obj.password, salt);
         obj.password = hashedPassword;
       }
-      const user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
-      if (!user) {
+      const principal = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
+      if (!principal) {
         throw new Error('!user doesnt updated')
       }
       user.password = null;
-      return user;
+      return principal;
   };
 
   //delete user

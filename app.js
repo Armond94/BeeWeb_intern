@@ -1,4 +1,4 @@
-//master branch (third time)
+//home_work branch (third time)
 import express from 'express';
 import bodyParser from 'body-parser';
 import Errors from './errors/errors';
@@ -11,6 +11,7 @@ require(`./configs/${process.env.NODE_ENV}.js`);
 //bodyParser
 app.use(bodyParser.urlencoded({extended: false}));
 app.errors = new Errors();
+
 
 // models
 app.models = {
@@ -32,6 +33,10 @@ app.services = {
 app.use((req, res, next) => {
   req.app = app;
   next();
+});
+
+app.get('/', (req, res) => {
+  res.send('hello world');
 });
 
 //routers

@@ -6,7 +6,7 @@ class Errors {
       REGISTERED_EMAIL: `!email is already registered`,
       AUTHENTIFICATION_FAILED: `!authentification failed`,
       PASSWORD_INCORECT: `!password incorect`,
-      USER_DESNT_UPDATED: `!user doesnt updated`,
+      USER_DOESNT_UPDATED: `!user doesnt updated`,
       POSITION_NOT_FOUND: `!position not found`,
       CANDIDATE_NOT_FOUND: `!candidate not found`,
       CANDIDATE_DOESNT_CREATED: `!candidate doesnt created`,

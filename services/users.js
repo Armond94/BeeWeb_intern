@@ -47,6 +47,7 @@ class UserServices {
       // throw new Error('!you dont have permission');
     // };
       let user = await this.models.users.findOne({email: userObject.email, deletedAt: null});
+      console.log(user);
       if (user) {
         throw this.app.errors.getError(this.app.errors.TYPES.REGISTERED_EMAIL);
       }
@@ -82,7 +83,7 @@ class UserServices {
   };
 
   //change user
-  async changeUser (user, changes, _id) {
+  async changeUser (changes, _id) {
     // if (user.role !== 'admin' && user.role !== 'hr' && !user._id.equals(_id)) {
     //   throw this.app.errors.getError(this.app.errors.TYPES.PERMISSION);
     // };
@@ -91,12 +92,12 @@ class UserServices {
         const hashedPassword = bcrypt.hashSync(changes.password, salt);
         changes.password = hashedPassword;
       }
-      const principal = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
-      if (!principal) {
-        throw this.app.errors.getError(this.app.errors.TYPES.USER_DESNT_UPDATED)
+      let user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
+      if (!user) {
+        throw this.app.errors.getError(this.app.errors.TYPES.USER_DOESNT_UPDATED)
       }
       user.password = null;
-      return principal;
+      return user;
   };
 
   //delete user

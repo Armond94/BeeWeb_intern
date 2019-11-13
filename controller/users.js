@@ -33,7 +33,6 @@ class UsersController {
   //create user
   async register (req, res, next) {
     let userObject = {...req.body};
-    console.log(userObject);
     try {
       let user = await req.app.services.users.createUser(userObject);
       return res.status(200).send('successfully registered');
@@ -56,7 +55,7 @@ class UsersController {
   async changeUser (req, res, next) {
     let changes = {...req.body};
     try {
-      let user = await req.app.services.users.changeUser(req.user, changes, req.params.id);
+      let user = await req.app.services.users.changeUser(changes, req.params.id);
       return res.status(200).send(user);
     } catch (err) {
       return next(err);

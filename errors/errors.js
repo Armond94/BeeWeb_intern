@@ -15,7 +15,10 @@ class Errors {
       CANDIDATE_DOESNT_DELETED: `!candidate doesnt deleted`,
       BENEFIT_NOT_FOUND: `!benefit not found`,
       BENEFIT_DOESNT_UPDATED: `!benefot doesnt updated`,
-      BENEFIT_DOESNT_DELETED: `!benefit doesnt deleted`
+      BENEFIT_DOESNT_DELETED: `!benefit doesnt deleted`,
+      TICKET_NOT_FOUND: `!ticket not found`,
+      TICKET_DOESNT_UPDATED: `!ticket doesnt updated`,
+      TICKET_DOESNT_DELETED: `!ticket doesnt deleted`
     };
   };
 

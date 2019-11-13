@@ -15,6 +15,9 @@ const userSchema = new Schema({
 },
 {
   timestamps: {createdAt: 'created_at'}
+},
+{
+  retainKeyOrder: true
 });
 
 module.exports = mongoose.model('users', userSchema);

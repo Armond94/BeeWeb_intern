@@ -10,6 +10,7 @@ class UsersController {
     }
   };
 
+  //find all users
   async getUsers (req, res, next) {
     try {
       let users = await req.app.services.users.getUsers();
@@ -31,12 +32,8 @@ class UsersController {
 
   //create user
   async register (req, res, next) {
-    const { firstName, lastName, email, role, birthday, phoneNumber, password, repeatPassword } = req.body;
-     // todo
-    if (!firstName || !lastName || !role || !email || !birthday || !phoneNumber || !password || !repeatPassword || password !== repeatPassword) {
-      return res.send('please fill correct');
-    }
     let userObject = {...req.body};
+    console.log(userObject);
     try {
       let user = await req.app.services.users.createUser(req.user, userObject);
       return res.status(200).send('successfully registered');
@@ -57,9 +54,9 @@ class UsersController {
 
   //change user
   async changeUser (req, res, next) {
-    let obj = {...req.body};
+    let changes = {...req.body};
     try {
-      let user = await req.app.services.users.changeUser(req.user, obj, req.params.id);
+      let user = await req.app.services.users.changeUser(req.user, changes, req.params.id);
       return res.status(200).send(user);
     } catch (err) {
       return next(err);
@@ -69,7 +66,7 @@ class UsersController {
   //delete user
   async deleteUser (req, res, next) {
     try {
-      let user = await req.app.services.users.deleteUser(req.user, req.params.id);
+      let user = await req.app.services.users.deleteUser(req.params.id);
       res.status(200).send(user);
     } catch (err) {
       return next(err);

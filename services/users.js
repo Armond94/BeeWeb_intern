@@ -82,16 +82,16 @@ class UserServices {
   };
 
   //change user
-  async changeUser (user, obj, _id) {
+  async changeUser (user, changes, _id) {
     // if (user.role !== 'admin' && user.role !== 'hr' && !user._id.equals(_id)) {
     //   throw this.app.errors.getError(this.app.errors.TYPES.PERMISSION);
     // };
-      if (obj.password) {
+      if (changes.password) {
         const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(obj.password, salt);
-        obj.password = hashedPassword;
+        const hashedPassword = bcrypt.hashSync(changes.password, salt);
+        changes.password = hashedPassword;
       }
-      const principal = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
+      const principal = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
       if (!principal) {
         throw this.app.errors.getError(this.app.errors.TYPES.USER_DESNT_UPDATED)
       }

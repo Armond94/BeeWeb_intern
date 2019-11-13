@@ -42,11 +42,11 @@ class UserServices {
   }
 
   //create user
-  async createUser (user1, userObject) {
+  async createUser (userObject) {
     // if (user.role !== 'admin' && user.role !== 'hr') {
       // throw new Error('!you dont have permission');
     // };
-      let user = await this.models.users.findOne({email: userObject.email});
+      let user = await this.models.users.findOne({email: userObject.email, deletedAt: null});
       if (user) {
         throw this.app.errors.getError(this.app.errors.TYPES.REGISTERED_EMAIL);
       }

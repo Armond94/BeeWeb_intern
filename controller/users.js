@@ -35,7 +35,7 @@ class UsersController {
     let userObject = {...req.body};
     console.log(userObject);
     try {
-      let user = await req.app.services.users.createUser(req.user, userObject);
+      let user = await req.app.services.users.createUser(userObject);
       return res.status(200).send('successfully registered');
     } catch (err) {
       return next(err);

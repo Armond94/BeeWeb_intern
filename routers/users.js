@@ -4,7 +4,7 @@ const ensureAuthenticated = require('../configs/auth');
 const controller = new UsersController();
 
 // find user by id
-router.get('/:id', controller.getUser);
+router.get('/:id', ensureAuthenticated, controller.getUser);
 
 // all users that have addBenefit(s)
 router.get('/benefits/exists', ensureAuthenticated, controller.usersBenefits);

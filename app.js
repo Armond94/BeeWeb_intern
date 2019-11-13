@@ -3,16 +3,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Errors = require('./errors/errors');
 const cors = require('cors');
+const multer = require('multer');
+const uploads = multer();
 const app = express();
 
 app.use(cors());
+app.use(uploads.fields([]));
 
 //connect mongo
 process.env.NODE_ENV || (process.env.NODE_ENV = 'dev');
 require(`./configs/${process.env.NODE_ENV}.js`);
 
 //bodyParser
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.errors = new Errors();
 
 // models

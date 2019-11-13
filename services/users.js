@@ -65,21 +65,17 @@ class UserServices {
 
   //signin
   async login (email, password) {
-    console.log('check user is registered or not');
     let user = await this.models.users.findOne({email: email, deletedAt: null});
     if (!user) {
-      console.log('user with that email is not registered');
       throw this.app.errors.getError(this.app.errors.TYPES.AUTHENTIFICATION_FAILED);
     }
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, isMatch) => {
         if (err || !isMatch) {
-          console.log('password incorrect');
           return reject(err || this.app.errors.getError(this.app.errors.TYPES.PASSWORD_INCORECT));
         }
         const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
         user.password = null;
-        console.log('users successfully logged');
         return resolve({user, token});
       });
     });

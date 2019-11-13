@@ -47,10 +47,8 @@ class UsersController {
 
   //signin
   async login (req, res, next) {
-    console.log('post request to "user/login" URL');
     try {
       let result = await req.app.services.users.login(req.body.email, req.body.password);
-      console.log('send user data and token to front');
       return res.status(200).send(result);
     } catch (err) {
       return next(err);

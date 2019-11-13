@@ -42,8 +42,8 @@ app.use((req, res, next) => {
 });
 
 //test endpoint for homepage paige
-app.post('/', (req, res) => {
-  res.send(req.body);
+app.get('/', (req, res) => {
+  res.send('hr-service');
 });
 
 //routers

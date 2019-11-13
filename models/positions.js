@@ -8,6 +8,9 @@ const positionSchema = new Schema({
   required_qualifications: {type: String, required: true},
   deadline: {type: Date, default: null},
   candidates: [{type: Schema.ObjectId, ref: 'candidates'}]
+},
+{
+  timestamps: {createdAt: 'created_at'}
 });
 
 module.exports = mongoose.model('positions', positionSchema);

@@ -7,6 +7,9 @@ const candidateSchema = new Schema({
   email: {type: String, required: true},
   phoneNumber: {type: Number, required: true},
   // cv: {type: Buffer, required: true}
+},
+{
+  timestamps: {createdAt: 'created_at'}
 });
 
 module.exports = mongoose.model('candidates', candidateSchema);

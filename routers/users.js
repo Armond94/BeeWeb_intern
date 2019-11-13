@@ -6,6 +6,9 @@ const controller = new UsersController();
 // find user by id
 router.get('/:id', ensureAuthenticated, controller.getUser);
 
+//find all users
+router.get('/', controller.getUsers);
+
 // all users that have addBenefit(s)
 router.get('/benefits/exists', ensureAuthenticated, controller.usersBenefits);
 
@@ -21,5 +24,4 @@ router.put('/:id', ensureAuthenticated, controller.changeUser);
 // delete  user
 router.delete('/:id', ensureAuthenticated, controller.deleteUser);
 
-// export default router;
 module.exports = router;

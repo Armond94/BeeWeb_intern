@@ -19,6 +19,14 @@ class UserServices {
     return principal;
   };
 
+  async getUsers () {
+    let users = await this.models.users.find({deletedAt: null}, {password: 0});
+    if (!users || users.length === 0) {
+      throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
+    }
+    return users;
+  }
+
   // all users that have benefits
   async usersBenefits (user1) {
     // if (user.role !== 'admin' && user.role !== 'hr') {
@@ -65,9 +73,9 @@ class UserServices {
       bcrypt.compare(password, user.password, (err, isMatch) => {
         if (err || !isMatch) {
           throw this.app.errors.getError(this.app.errors.TYPES.PASSWORD_INCORECT);
-          return reject(err || new Error('!password incorect'));
+          return reject(err || this.app.errors.getError(this.app.errors.TYPES.PASSWORD_INCORECT));
         }
-        const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '1h'});
+        const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
         user.password = null;
         return resolve({user, token});
       });
@@ -86,7 +94,7 @@ class UserServices {
       }
       const principal = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
       if (!principal) {
-        throw new Error('!user doesnt updated')
+        throw this.app.errors.getError(this.app.errors.TYPES.USER_DESNT_UPDATED)
       }
       user.password = null;
       return principal;
@@ -100,7 +108,7 @@ class UserServices {
       const benefits = await this.models.benefits.updateMany({}, {$pull: {users: _id}}, {new: true});
       const user = await this.models.users.findOneAndUpdate({_id}, {deletedAt: Date.now()}, {new: true});
       if (!user) {
-        throw new Error('!user not found');
+        throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
       }
       user.password = null;
       return user;

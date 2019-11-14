@@ -66,7 +66,7 @@ class UsersController {
   async deleteUser (req, res, next) {
     try {
       let user = await req.app.services.users.deleteUser(req.params.id);
-      res.status(200).send(user);
+      return res.status(200).send(user);
     } catch (err) {
       return next(err);
     }

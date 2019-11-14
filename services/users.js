@@ -9,9 +9,6 @@ class UserServices {
 
   //find user by id
   async getUser (user, _id) {
-    // if (user.role !== 'admin' && user.role !== 'hr' && !user._id.equals(_id)) {
-    //   throw this.app.errors.getError(this.app.errors.TYPES.PERMISSION);
-    // };
     let principal = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0});
     if (!principal) {
       throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
@@ -29,9 +26,6 @@ class UserServices {
 
   // all users that have benefits
   async usersBenefits (user1) {
-    // if (user.role !== 'admin' && user.role !== 'hr') {
-    //   throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
-    // };
       let users_id = await this.models.benefitsHystory.distinct('user_id');
       let users = await this.models.users.find({_id: {$in: users_id}, deletedAt: null}, {password: 0});
       if (!users || users.length === 0) {
@@ -43,10 +37,26 @@ class UserServices {
 
   //create user
   async createUser (userObject) {
-      let user = await this.models.users.findOne({email: userObject.email, deletedAt: null});
-      console.log(user);
-      if (user) {
+      let user = await this.models.users.findOne({email: userObject.email});
+      if (user && user.deletedAt == null) {
         throw this.app.errors.getError(this.app.errors.TYPES.REGISTERED_EMAIL);
+      }
+      if (user && user.deletedAt != null) {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(userObject.password, salt, async (err, hash) => {
+            if (err) {
+              throw err;
+            }
+            userObject.password = hash;
+          });
+        });
+        userObject.deletedAt = null;
+        let result = await this.models.users.findOneAndUpdate({_id: user._id}, userObject, {new: true});
+        if (!result) {
+          throw this.app.errors.getError(this.app.errors.TYPES.REGISTERATION_FAILD)
+        }
+        result.password = null;
+        return result;
       }
       let newUser = new this.models.users(userObject);
 
@@ -81,9 +91,6 @@ class UserServices {
 
   //change user
   async changeUser (changes, _id) {
-    // if (user.role !== 'admin' && user.role !== 'hr' && !user._id.equals(_id)) {
-    //   throw this.app.errors.getError(this.app.errors.TYPES.PERMISSION);
-    // };
       if (changes.password) {
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(changes.password, salt);
@@ -99,9 +106,6 @@ class UserServices {
 
   //delete user
   async deleteUser(_id) {
-    // if (user.role !== 'admin' && user.role !== 'hr' && !user._id.equals(_id)) {
-    //   throw this.app.errors.getError(this.app.errors.TYPES.PERMISSION);
-    // };
       const benefits = await this.models.benefits.updateMany({}, {$pull: {users: _id}}, {new: true});
       const user = await this.models.users.findOneAndUpdate({_id}, {deletedAt: Date.now()}, {new: true});
       if (!user) {

@@ -2,6 +2,8 @@ const router = require('express').Router();
 const UsersController = require('../controller/users');
 const UserValidation = require('../validations/user_validations');
 const ensureAuthenticated = require('../configs/auth');
+const UserPermissions = require('../validations/user_permissions');
+const permission = new UserPermissions;
 const controller = new UsersController();
 const validation = new UserValidation();
 

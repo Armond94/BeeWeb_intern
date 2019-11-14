@@ -5,7 +5,7 @@ const ticketSchema = new Schema({
   userId: {type:  Schema.ObjectId, required: true},
   startDate:{type: String, required: true},
   endDate: {type: String, required: true},
-  confirmed: {type: Boolean, default: null}
+  confirmed: {type: Boolean, default: false}
 },
 {
   timestamps: {createdAt: 'created_at'}

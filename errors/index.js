@@ -4,6 +4,7 @@ class Errors {
       USER_NOT_FOUND: `!User not found`,
       PERMISSION: `!you dont have such permission`,
       REGISTERED_EMAIL: `!email is already registered`,
+      REGISTERATION_FAILD: `!registration failed`,
       AUTHENTIFICATION_FAILED: `!authentification failed`,
       PASSWORD_INCORECT: `!password incorect`,
       USER_DOESNT_UPDATED: `!user doesnt updated`,
@@ -24,6 +25,10 @@ class Errors {
 
   getError (message) {
     return new Error(message);
+  }
+
+  static generateConflictError(res, text='You dont have such permission'){
+    res.status(409).send(text);
   }
 }
 

@@ -1,7 +1,7 @@
 //home_work branch (third time)
 const express = require('express');
 const bodyParser = require('body-parser');
-const Errors = require('./errors/errors');
+const Errors = require('./errors/index');
 const cors = require('cors');
 const app = express();
 

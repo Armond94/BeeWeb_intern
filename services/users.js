@@ -73,11 +73,15 @@ class UserServices {
     }
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err || !isMatch) {
-          return reject(err || this.app.errors.getError(this.app.errors.TYPES.PASSWORD_INCORECT));
+        if (err) {
+          return reject(err);
+        }
+        if (!isMatch) {
+           return reject('password incorect');
         }
         const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
         user.password = null;
+        console.log('service token', token);
         return resolve({user, token});
       });
     });

@@ -77,7 +77,6 @@ class UserServices {
           return reject(err || this.app.errors.getError(this.app.errors.TYPES.PASSWORD_INCORECT));
         }
         const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
-        console.log('service token', token);
         user.password = null;
         return resolve({user, token});
       });

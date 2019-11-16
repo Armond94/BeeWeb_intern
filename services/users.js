@@ -81,7 +81,6 @@ class UserServices {
         }
         const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
         user.password = null;
-        console.log('service token', token);
         return resolve({user, token});
       });
     });

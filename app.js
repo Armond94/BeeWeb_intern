@@ -41,7 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//test endpoint for homepage paige
+//test endpoint for homepage
 app.get('/', (req, res) => {
   res.send('hr-service');
 });
@@ -53,9 +53,9 @@ app.use('/positions', require('./routers/positions'));
 app.use('/candidates', require('./routers/candidates'));
 app.use('/tickets', require('./routers/tickets'));
 
-app.use((err, req, res, next) => {
-  return res.status(400).send(err.message);
-});
+// app.use((err, req, res, next) => {
+//   return res.status(400).send(err.message);
+// });
 
 !process.env.PORT && (process.env.PORT = 3000);
 app.listen(process.env.PORT, () => console.log(`server is listen on port ${process.env.PORT}`));

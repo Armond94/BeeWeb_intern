@@ -1,8 +1,11 @@
+let permission = `!you dont have such permission`;
+let notFound = `not found`;
+
 class Errors {
   constructor (TYPES) {
     this.TYPES = {
-      USER_NOT_FOUND: `!User not found`,
-      PERMISSION: `!you dont have such permission`,
+      // USER_NOT_FOUND: `!User not found`,
+      // PERMISSION: `!you dont have such permission`,
       REGISTERED_EMAIL: `!email is already registered`,
       REGISTERATION_FAILD: `!registration failed`,
       AUTHENTIFICATION_FAILED: `!authentification failed`,
@@ -27,9 +30,22 @@ class Errors {
     return new Error(message);
   }
 
-  static generateConflictError(res, text='You dont have such permission'){
-    res.status(409).send(text);
-  }
+  static generatePermissionError (res, text=`you dont have such permission`){
+    return res.status(409).send(text);
+  };
+
+  static generateNotFoundError (res, text) {
+    return res.status(404).send(`!${text} not foud`);
+  };
+
+  static generateRegisteredEmailError (res, text) {
+    if (!text) {
+      return res.status(400).send(`!authentification faild`);
+    }
+    return res.status(400).send(`!email is already registered`);
+  };
+
+
 }
 
 module.exports = Errors;

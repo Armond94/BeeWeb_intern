@@ -8,67 +8,61 @@ class UserServices {
   };
 
   //find user by id
-  async getUser (user, _id) {
-    let principal = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0});
-    if (!principal) {
-      throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
+  async getUser (_id) {
+    let user = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0});
+    if (!user) {
+      throw new Error();
     }
-    return principal;
+    return user;
   };
 
+  //get all users
   async getUsers () {
     let users = await this.models.users.find({deletedAt: null}, {password: 0});
     if (!users || users.length === 0) {
-      throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
+      throw new Error();
     }
     return users;
   }
 
   // all users that have benefits
-  async usersBenefits (user1) {
+  async usersBenefits () {
       let users_id = await this.models.benefitsHystory.distinct('user_id');
       let users = await this.models.users.find({_id: {$in: users_id}, deletedAt: null}, {password: 0});
       if (!users || users.length === 0) {
-        throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
+        throw new Error();
       }
       return users;
-
   }
 
   //create user
   async createUser (userObject) {
       let user = await this.models.users.findOne({email: userObject.email});
       if (user && user.deletedAt == null) {
-        throw this.app.errors.getError(this.app.errors.TYPES.REGISTERED_EMAIL);
+        throw new Error('email is already registered');
       }
-      if (user && user.deletedAt != null) {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(userObject.password, salt, async (err, hash) => {
-            if (err) {
-              throw err;
-            }
-            userObject.password = hash;
-          });
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(userObject.password, salt, async (err, hash) => {
+          if (err) {
+            throw err;
+          }
+          userObject.password = hash;
         });
+      });
+
+      if (user && user.deletedAt != null) {
         userObject.deletedAt = null;
         let result = await this.models.users.findOneAndUpdate({_id: user._id}, userObject, {new: true});
         if (!result) {
-          throw this.app.errors.getError(this.app.errors.TYPES.REGISTERATION_FAILD)
+          throw new Error('');
         }
         result.password = null;
         return result;
       }
-      let newUser = new this.models.users(userObject);
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, async (err, hash) => {
-          if (err) {
-            throw err;
-          }
-          newUser.password = hash;
-          return await newUser.save();
-        });
-      });
+      let newUser = new this.models.users(userObject);
+      return await newUser.save();
   };
 
   //signin
@@ -83,6 +77,7 @@ class UserServices {
           return reject(err || this.app.errors.getError(this.app.errors.TYPES.PASSWORD_INCORECT));
         }
         const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
+        console.log('service token', token);
         user.password = null;
         return resolve({user, token});
       });

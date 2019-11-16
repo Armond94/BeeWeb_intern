@@ -1,12 +1,14 @@
+const Errors = require('../errors');
+
 class UsersController {
 
   //find user
   async getUser (req, res, next) {
     try {
-      let user = await req.app.services.users.getUser(req.user, req.params.id);
+      let user = await req.app.services.users.getUser(req.params.id);
       return res.status(200).send(user);
     } catch (err) {
-      return next(err);
+      return Errors.generateNotFoundError(res, `user`);
     }
   };
 
@@ -16,17 +18,17 @@ class UsersController {
       let users = await req.app.services.users.getUsers();
       return res.status(200).send(users);
     } catch (err) {
-      return next(err);
+      return Errors.generateNotFoundError(res, `user`);
     }
   }
 
   //all users that have benefits
   async usersBenefits (req, res, next) {
     try {
-      let users = await req.app.services.users.usersBenefits(req.user);
+      let users = await req.app.services.users.usersBenefits();
       return res.status(200).send(users);
     } catch (err) {
-      return next(err);
+      return Errors.generateNotFoundError(res, `user`);
     }
   };
 
@@ -37,7 +39,7 @@ class UsersController {
       let user = await req.app.services.users.createUser(userObject);
       return res.status(200).send('successfully registered');
     } catch (err) {
-      return next(err);
+      return generateRegisteredEmailError(res, err.message);
     }
   };
 
@@ -45,6 +47,7 @@ class UsersController {
   async login (req, res, next) {
     try {
       let result = await req.app.services.users.login(req.body.email, req.body.password);
+      console.log('result', result);
       return res.status(200).send(result);
     } catch (err) {
       return next(err);

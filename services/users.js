@@ -39,23 +39,16 @@ class UserServices {
   async createUser (userObject) {
       let user = await this.models.users.findOne({email: userObject.email});
       if (user && user.deletedAt == null) {
-        throw new Error('email is already registered');
+        throw new Error();
       }
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(userObject.password, salt, async (err, hash) => {
-          if (err) {
-            throw err;
-          }
-          userObject.password = hash;
-        });
-      });
+      const salt = bcrypt.genSaltSync(10);
+      userObject.password = bcrypt.hashSync(userObject.password, salt);
 
       if (user && user.deletedAt != null) {
         userObject.deletedAt = null;
         let result = await this.models.users.findOneAndUpdate({_id: user._id}, userObject, {new: true});
         if (!result) {
-          throw new Error('');
+          throw new Error();
         }
         result.password = null;
         return result;

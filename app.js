@@ -10,7 +10,7 @@ app.use(cors());
 
 //connect mongo
 process.env.NODE_ENV || (process.env.NODE_ENV = 'dev');
-require(`./configs/${process.env.NODE_ENV}.js`);
+require(`./configs/prod.js`);
 
 //bodyParser
 app.use(bodyParser.urlencoded({extended: true}));

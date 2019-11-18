@@ -4,7 +4,7 @@ const ADMIN_ROLES = ['admin', 'manager'];
 class UserPermissions {
 
   isAdmin (req, res, next) {
-    if (!['admin', 'manager'].includes(req.user.role)) {
+    if (!ADMIN_ROLES.includes(req.user.role)) {
       return Errors.generatePermissionError(res);
     }
     next();

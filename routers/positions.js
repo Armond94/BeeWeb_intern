@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const PositionsController = require('../controller/positions');
 const ensureAuthenticated = require('../configs/auth');
-const controller = new PositionsController();
+const controller = new (require('../controller/positions'));
+const permission = new (require('../validations/user_permissions'));
+const validation = new (require('../validations/validations'));
+
 
 //get position by id
 router.get('/:id', controller.getPosition);
@@ -10,13 +12,13 @@ router.get('/:id', controller.getPosition);
 router.get('', controller.getPositions);
 
 //create position
-router.post('', ensureAuthenticated, controller.createPosition);
+router.post('', ensureAuthenticated, permission.isAdmin, validation.checkPosition, controller.createPosition);
 
 //change position
-router.put('', ensureAuthenticated, controller.changePosition);
+router.put('', ensureAuthenticated, permission.isAdmin, controller.updatePosition);
 
 //delete position
-router.delete('', ensureAuthenticated, controller.deletePosition);
+router.delete('', ensureAuthenticated, permission.isAdmin, controller.deletePosition);
 
 // export default router;
 module.exports = router;

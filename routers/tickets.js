@@ -1,21 +1,22 @@
 const router = require('express').Router();
-const TicketsController = require('../controller/tickets');
 const ensureAuthenticated = require('../configs/auth');
-const controller = new TicketsController();
+const controller = new (require('../controller/tickets'));
+const permission = new (require('../validations/user_permissions'));
+const validation = new (require('../validations/validations'));
 
 // find ticket
-router.get('/:id', controller.getTicket);
+router.get('/:id', ensureAuthenticated, permission.isStaff, controller.getTicket);
 
 // all tickets
-router.get('/', controller.getTickets);
+router.get('/', ensureAuthenticated, permission.isAdmin, controller.getTickets);
 
 // create ticket
-router.post('/create', controller.createTicket);
+router.post('/create', ensureAuthenticated, permission.isStaff, validation.checkTicket, controller.createTicket);
 
 // change ticket
-router.put('/:id', controller.changeTicket);
+router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateTicket);
 
 // delete  ticket
-router.delete('/:id', controller.deleteTicket);
+router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteTicket);
 
 module.exports = router;

@@ -8,7 +8,7 @@ class BenefitServices {
   async getBenefit (_id) {
     let benefit = await this.models.benefits.findOne({_id});
     if (!benefit) {
-      throw this.app.errors.getError(this.app.errors.TYPES.BENEFIT_NOT_FOUND);
+      throw new Error();
     }
     return benefit;
   };
@@ -17,14 +17,14 @@ class BenefitServices {
   async getBenefits() {
     let benefits = await this.models.benefits.find();
     if (!benefits || benefits.length === 0) {
-      throw this.app.errors.getError(this.app.errors.TYPES.BENEFIT_NOT_FOUND);
+      throw new Error();
     }
     return benefits;
   }
 
   //create benefit
-  createBenefit (title, description) {
-    const newBenefit = new this.models.benefits({title, description});
+  createBenefit (benefitObject) {
+    const newBenefit = new this.models.benefits(benefitObject);
     return newBenefit.save();
   };
 
@@ -35,10 +35,10 @@ class BenefitServices {
   }
 
   //change benefit
-  async changeBenefit (_id, obj) {
+  async updateBenefit (_id, obj) {
     const benefit = await this.models.benefits.findOneAndUpdate(_id, obj, {new: true});
     if (!benefit) {
-      throw this.app.errors.getError(this.app.errors.TYPES.BENEFIT_DOESNT_UPDATED);
+      throw new Error();
     }
     return benefit;
   };
@@ -48,7 +48,7 @@ class BenefitServices {
     let users = await this.models.users.updateMany({}, {$pull: {benefits: _id}}, {new: true});
     let benefit = await this.models.benefits.findOneAndDelete({_id});
     if (!benefit) {
-        throw this.app.errors.getError(this.app.errors.TYPES.BENEFIT_DOESNT_DELETED);
+        throw new Error();
     }
     return benefit;
   };

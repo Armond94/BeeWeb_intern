@@ -40,7 +40,7 @@ class UsersController {
       let user = await req.app.services.users.createUser(userObject);
       return res.status(200).send('successfully registered');
     } catch (err) {
-      return generateRegisteredEmailError(res, err.message);
+      return Errors.generateRegistrationError(res, `registration`);
     }
   };
 
@@ -50,18 +50,18 @@ class UsersController {
       let result = await req.app.services.users.login(req.body.email, req.body.password);
       return res.status(200).send(result);
     } catch (err) {
-      return next(err);
+      return Errors.generateLoginError(res, `login`);
     }
   };
 
   //change user
-  async changeUser (req, res, next) {
+  async updateUser (req, res, next) {
     let changes = {...req.body};
     try {
-      let user = await req.app.services.users.changeUser(changes, req.params.id);
+      let user = await req.app.services.users.updateUser(changes, req.params.id);
       return res.status(200).send(user);
     } catch (err) {
-      return next(err);
+      return Errors.generateUpdateError(res, `update`);
     }
   };
 
@@ -71,7 +71,7 @@ class UsersController {
       let user = await req.app.services.users.deleteUser(req.params.id);
       return res.status(200).send(user);
     } catch (err) {
-      return next(err);
+      return Errors.generateDeleteError(res, `update`);
     }
   };
 };

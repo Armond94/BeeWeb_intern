@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const ensureAuthenticated = require('../configs/auth');
 const UsersController = require('../controller/users');
-const UserValidation = require('../validations/user_validations');
+const Validations = require('../validations/validations');
 const UserPermissions = require('../validations/user_permissions');
 const controller = new UsersController();
 const permission = new UserPermissions();
-const validation = new UserValidation();
+const validation = new Validations();
 
 // find user by id
 router.get('/:id', ensureAuthenticated, permission.isStaff, controller.getUser);
@@ -20,12 +20,12 @@ router.get('/benefits/exists', ensureAuthenticated, permission.isAdmin, controll
 router.post('/register', validation.checkForRegister, controller.register);
 
 // signin
-router.post('/login', validation.chekForLogin, controller.login);
+router.post('/login', validation.checkForLogin, controller.login);
 
 // change user
-router.put('/:id', ensureAuthenticated, permission.isStaff, controller.changeUser);
+router.put('/:id', ensureAuthenticated, permission.isStaff, controller.updateUser);
 
 // delete  user
-router.delete('/:id', ensureAuthenticated, permission.isStaff, permission.isAdmin, controller.deleteUser);
+router.delete('/:id', ensureAuthenticated, permission.isStaff, controller.deleteUser);
 
 module.exports = router;

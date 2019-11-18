@@ -1,12 +1,13 @@
-class TicketsController {
+const Error = require('../errors');
 
+class TicketsController {
   //find and return ticket
   async getTicket (req, res, next) {
     try {
       let ticket = await req.app.services.tickets.getTicket(req.params.id);
       return res.status(200).send(ticket)
     } catch (err) {
-      next(err);
+      return Errors.generateNotFoundError(res, `ticket`);
     }
   };
 
@@ -16,32 +17,29 @@ class TicketsController {
       let tickets = await req.app.services.tickets.getTicket();
       return res.status(200).send(tickets)
     } catch (err) {
-      next(err);
+      return Errors.generateNotFoundError(res, `ticket`);
     }
   };
 
   //create and return ticket
   async createTicket (req, res, next) {
-    const {userId, startDate, endDate} = req.body;
-    if (!userId || !startDate || !endDate) {
-      return res.send('incorect data');
-    }
+    const TicketObject = {...req.body};
     try {
-      let ticket = await req.app.services.tickets.createTicket(userId, startDate, endDate);
+      let ticket = await req.app.services.tickets.createTicket(TicketObject);
       return res.status(200).send(ticket);
     } catch (err) {
-      return next(err);
+      return Errors.generateCreateError(res, `ticket`);
     }
   };
 
   //change and return ticket
-  async changeTicket (req, res, next) {
+  async updateTicket (req, res, next) {
     let obj = {...req.body};
     try {
-      let ticket = await req.app.services.tickets.changeTicket(obj);
+      let ticket = await req.app.services.tickets.updateTicket(obj);
       return res.status(200).send(ticket);
     } catch (err) {
-      return next(err);
+      return Errors.generateUpdateError(res, `ticket`);
     }
   };
 
@@ -51,7 +49,7 @@ class TicketsController {
       let ticket = await req.app.services.tickets.deleteTicket(req.params.id);
       return res.status(200).send(ticket);
     } catch (err) {
-      return next(err);
+      return Errors.generateDeleteError(res, `ticket`);
     }
   }
 }

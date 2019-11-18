@@ -62,7 +62,7 @@ class UserServices {
   async login (email, password) {
     let user = await this.models.users.findOne({email: email, deletedAt: null});
     if (!user) {
-      throw this.app.errors.getError(this.app.errors.TYPES.AUTHENTIFICATION_FAILED);
+      throw new Error();
     }
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -80,7 +80,7 @@ class UserServices {
   };
 
   //change user
-  async changeUser (changes, _id) {
+  async updateUser (changes, _id) {
       if (changes.password) {
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(changes.password, salt);
@@ -88,7 +88,7 @@ class UserServices {
       }
       let user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
       if (!user) {
-        throw this.app.errors.getError(this.app.errors.TYPES.USER_DOESNT_UPDATED)
+        throw new Error();
       }
       user.password = null;
       return user;
@@ -99,7 +99,7 @@ class UserServices {
       const benefits = await this.models.benefits.updateMany({}, {$pull: {users: _id}}, {new: true});
       const user = await this.models.users.findOneAndUpdate({_id}, {deletedAt: Date.now()}, {new: true});
       if (!user) {
-        throw this.app.errors.getError(this.app.errors.TYPES.USER_NOT_FOUND);
+        throw new Error();
       }
       user.password = null;
       return user;

@@ -9,7 +9,6 @@ const userSchema = new Schema({
   birthday: {type: String, required: true},
   phoneNumber: {type: Number, required: true},
   salary: {type: Number, default: 0},
-  // attendance: {type: Number, default: 0},
   password: {type: String, required: true},
   deletedAt: {type: Date, default: null}
 },

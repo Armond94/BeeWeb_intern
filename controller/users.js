@@ -59,8 +59,11 @@ class UsersController {
   //change user
   async updateUser (req, res, next) {
     let changes = {...req.body};
+    console.log('changes - ', changes);
+    console.log('req.params.id ', req.params.id);
     try {
       let user = await req.app.services.users.updateUser(changes, req.params.id);
+      console.log('user - ', user);
       return res.status(200).send(user);
     } catch (err) {
       return Errors.generateUpdateError(res, `update`);

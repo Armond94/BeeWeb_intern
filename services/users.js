@@ -87,6 +87,7 @@ class UserServices {
         changes.password = hashedPassword;
       }
       let user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
+      console.log('service update console user - ', user);
       if (!user) {
         throw new Error();
       }

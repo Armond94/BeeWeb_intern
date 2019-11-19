@@ -55,5 +55,5 @@ app.use('/positions', require('./routers/positions'));
 app.use('/candidates', require('./routers/candidates'));
 app.use('/tickets', require('./routers/tickets'));
 
-!process.env.PORT && (process.env.PORT = 3000);
+!process.env.PORT && (process.env.PORT = 3005);
 app.listen(process.env.PORT, () => console.log(`server is listen on port ${process.env.PORT}`));

@@ -8,27 +8,17 @@ let message = 'please fill all fields correct';
 class UserValidation {
 
     checkForRegister (req, res, next) {
-      console.log('22222222 test checkForRegister - req.body', req.body);
       let keys = Object.keys(req.body);
       let values = Object.values(req.body);
-      console.log('test values', values);
-      console.log('test keys', keys);
-
+      console.log('req.body', req.body);
+      console.log('keys - ', keys);
+      console.log('values - ', values);
       if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
-
-        console.log('3333, fields not correct ')
-        // console.log('33113322266', registerationFields.every(item => keys.includes(item)));
         registerationFields.every(item => {
-          console.log('33331111111 - keys.includes(item) - ', keys.includes(item));
           return keys.includes(item);
         });
-
-        console.log('333322222 values.includes() - ', values.includes(''));
-        console.log('33333-33333 req.body.password != req.body.repeatPassword', req.body.password != req.body.repeatPassword);
-
         return res.status(400).send(message);
       }
-      console.log('444444 , all fields correct');
       next();
     };
 

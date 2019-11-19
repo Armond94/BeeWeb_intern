@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node -r esm app.js",
-    "heroku-postbuild": "webpack -p"
+    "start": "node -r esm app.js"
   },
   "author": "Armond",
   "license": "ISC",

@@ -17,7 +17,7 @@ router.get('/', ensureAuthenticated, permission.isAdmin, controller.getUsers);
 router.get('/benefits/exists', ensureAuthenticated, permission.isAdmin, controller.usersBenefits);
 
 // signup
-router.post('/register', ensureAuthenticated, permission.isAdmin, validation.checkForRegister, controller.register);
+router.post('/register', controller.register);
 
 // signin
 router.post('/login', validation.checkForLogin, controller.login);

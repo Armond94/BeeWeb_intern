@@ -1,16 +1,17 @@
 //home_work branch (third time)
-// const express = require('express');
-import express from 'express';
+// import express from 'express';
+const express = require('express');
 const bodyParser = require('body-parser');
 const Errors = require('./errors/index');
 const cors = require('cors');
 const app = express();
 
+
 app.use(cors());
 
 //connect mongo
 process.env.NODE_ENV || (process.env.NODE_ENV = 'dev');
-require(`./configs/prod.js`);
+require(`./configs/dev.js`);
 
 //bodyParser
 app.use(bodyParser.urlencoded({extended: true}));

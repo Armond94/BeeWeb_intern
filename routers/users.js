@@ -23,9 +23,9 @@ router.post('/register', ensureAuthenticated, validation.checkForRegister, permi
 router.post('/login', validation.checkForLogin, controller.login);
 
 // change user
-router.put('/:id', ensureAuthenticated, permission.isStaff, controller.updateUser);
+router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateUser);
 
 // delete  user
-router.delete('/:id', ensureAuthenticated, permission.isStaff, controller.deleteUser);
+router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteUser);
 
 module.exports = router;

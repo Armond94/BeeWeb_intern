@@ -1,7 +1,7 @@
 class Errors {
 
   static generatePermissionError (res, text=`you dont have such permission`){
-    return res.status(409).send(text);
+    return res.status(400).send(text);
   };
 
   static generateNotFoundError (res, text) {

@@ -11,18 +11,18 @@ class UserValidation {
       let keys = Object.keys(req.body);
       let values = Object.values(req.body);
       if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
-        return res.send(message);
+        return res.status(400).send(message);
       }
       next();
     };
 
   checkForLogin (req, res, next) {
     console.log('req.body - ', req.body);
-    console.log('req.headers', req.headers);
+    console.log('req.headers -', req.headers);
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
     if (!loginFields.every(item => keys.includes(item)) || values.includes('')) {
-      return res.send(message);
+      return res.status(400).send(message);
     };
     next();
   };
@@ -31,7 +31,7 @@ class UserValidation {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
     if (!benefitFields.every(item => keys.includes(item)) || values.includes('')) {
-      return res.send(message);
+      return res.status(400).send(message);
     };
     next();
   };
@@ -40,7 +40,7 @@ class UserValidation {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
     if (!benefitFields.every(item => keys.includes(item)) || values.includes('')) {
-      return res.send(message);
+      return res.status(400).send(message);
     };
     next();
   };

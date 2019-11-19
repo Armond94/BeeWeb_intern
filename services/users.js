@@ -70,7 +70,7 @@ class UserServices {
           return reject(err);
         }
         if (!isMatch) {
-           return reject('password incorect');
+           return reject('login failed');
         }
         const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
         user.password = null;

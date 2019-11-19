@@ -13,6 +13,12 @@ class UserValidation {
       let values = Object.values(req.body);
       if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
         console.log('3333, fields not correct ')
+        registerationFields.every(item => {
+          console.log('33331111111 - keys.includes(item) - ', keys.includes(item));
+          return keys.includes(item);
+        });
+        console.log('333322222 values.includes('') - ', values.includes(''));
+        console.log('33333-33333 req.body.password != req.body.repeatPassword', req.body.password != req.body.repeatPassword);
         return res.status(400).send(message);
       }
       console.log('444444 , all fields correct');

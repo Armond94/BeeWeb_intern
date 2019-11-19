@@ -59,6 +59,7 @@ class UsersController {
   //change user
   async updateUser (req, res, next) {
     let changes = {...req.body};
+    console.log('req.body - ', req.body);
     console.log('changes - ', changes);
     console.log('req.params.id ', req.params.id);
     try {

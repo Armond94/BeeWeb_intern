@@ -4,7 +4,9 @@ const ADMIN_ROLES = ['admin', 'manager'];
 class UserPermissions {
 
   isAdmin (req, res, next) {
+
     if (!ADMIN_ROLES.includes(req.user.role)) {
+      console.log('test isAdmin you are not admin', req.user.role);
       return Errors.generatePermissionError(res);
     }
     next();

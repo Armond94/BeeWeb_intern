@@ -35,7 +35,9 @@ class UsersController {
   //create user
   async register (req, res, next) {
     let userObject = {...req.body};
+    console.log('test in controller req.body', req.body);
     delete userObject.repeatPassword;
+    console.log('test in controller req.body delete password', req.body);
     try {
       let user = await req.app.services.users.createUser(userObject);
       return res.status(200).send('successfully registered');

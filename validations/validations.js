@@ -8,11 +8,14 @@ let message = 'please fill all fields correct';
 class UserValidation {
 
     checkForRegister (req, res, next) {
+      console.log('22222222 test checkForRegister - req.body', req.body);
       let keys = Object.keys(req.body);
       let values = Object.values(req.body);
       if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
+        console.log('3333, fields not correct ')
         return res.status(400).send(message);
       }
+      console.log('444444 , all fields correct');
       next();
     };
 

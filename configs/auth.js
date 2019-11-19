@@ -18,9 +18,10 @@ module.exports = async (req, res, next) => {
 
     let user = await users.findOne({_id: decoded.userId, deletedAt: null});
     req.user = user;
-    
+
+    console.log('11111111 test console in auth.js file - req.user', req.user);
     next();
   } catch (err) {
-    return res.send(err.message);
+    return res.status(400).send(err.message);
   }
 }

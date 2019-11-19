@@ -23,9 +23,9 @@ router.post('/register', ensureAuthenticated, validation.checkForRegister, permi
 router.post('/login', validation.checkForLogin, controller.login);
 
 // change user
-router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateUser);
+router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateUser);//poxel
 
 // delete  user
-router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteUser);
+router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteUser);//poxel
 
 module.exports = router;

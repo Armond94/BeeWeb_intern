@@ -46,8 +46,6 @@ class UsersController {
 
   //signin
   async login (req, res, next) {
-    console.log('controller req.body - ', req.body);
-    console.log('controller req.headers', req.headers);
     try {
       let result = await req.app.services.users.login(req.body.email, req.body.password);
       return res.status(200).send(result);

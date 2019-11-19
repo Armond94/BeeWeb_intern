@@ -11,7 +11,11 @@ class UserPermissions {
   };
 
   isStaff (req, res, next) {
-    if (!req.user._id.equals(req.params.id)) {
+    console.log('req.headers.Authorization - ', req.headers.Authorization);
+    console.log('req.body - ', req.body);
+    console.log('req.params.id - ', req.params.id);
+    console.log(req.user);
+    if (!ADMIN_ROLES.includes(req.user.role) && !req.user._id.equals(req.params.id)  ) {
       return Errors.generatePermissionError(res);
     }
     next();

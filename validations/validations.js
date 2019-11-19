@@ -17,8 +17,6 @@ class UserValidation {
     };
 
   checkForLogin (req, res, next) {
-    console.log('req.body - ', req.body);
-    console.log('req.headers -', req.headers);
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
     if (!loginFields.every(item => keys.includes(item)) || values.includes('')) {

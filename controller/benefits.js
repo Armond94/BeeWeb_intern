@@ -16,7 +16,7 @@ class BenefitsController {
   async getBenefits(req, res) {
     try {
       let benefits = await req.app.services.benefits.getBenefits();
-      res.status(200).send(benefits);
+      return res.status(200).send(benefits);
     } catch (err) {
       return Errors.generateNotFoundError(res, `benefit`);
     }
@@ -24,10 +24,10 @@ class BenefitsController {
 
   //create benefit
   async createBenefit (req, res, next) {
-    const {benefitObject} = req.body;
+    const benefitObject = {...req.body};
     try {
       let benefit = await req.app.services.benefits.createBenefit(benefitObject);
-      res.status(200).send(benefit);
+      return res.status(200).send(benefit);
     } catch (err) {
       return Errors.generateCreateError(res, `benefit`);
     }
@@ -35,11 +35,10 @@ class BenefitsController {
 
   //give benefit to user
   async addBenefit (req, res, next) {
-    let {user_id, benefit_id} = req.body;
-
+    let benefitObject = {...req.body};
     try {
-        let benefitsHystory = await req.app.services.benefits.addBenefit(user_id, benefit_id);
-        res.status(200).send(benefitsHystory);
+      let benefits_hystory = await req.app.services.benefits.addBenefit(benefitObject);
+      return res.status(200).send(benefits_hystory);
     } catch (err) {
       return Errors.generateAddError(res, `benefit`);
     }
@@ -50,7 +49,7 @@ class BenefitsController {
     const obj = req.body;
     try {
       const benefit = await req.app.services.benefits.updateBenefit(req.params.id, obj);
-      res.status(200).send(benefit);
+      return res.status(200).send(benefit);
     } catch (err) {
       return Errors.generateUpdateError(res, `benefit`);
     }

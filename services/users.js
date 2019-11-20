@@ -27,7 +27,7 @@ class UserServices {
 
   // all users that have benefits
   async usersBenefits () {
-      let users_id = await this.models.benefitsHystory.distinct('user_id');
+      let users_id = await this.models.benefits_hystory.distinct('user_id');
       let users = await this.models.users.find({_id: {$in: users_id}, deletedAt: null}, {password: 0});
       if (!users || users.length === 0) {
         throw new Error();

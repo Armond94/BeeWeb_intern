@@ -5,13 +5,13 @@ const permission = new (require('../validations/user_permissions'));
 const validation = new (require('../validations/validations'));
 
 // find ticket
-router.get('/:id', ensureAuthenticated, permission.isStaff, controller.getTicket);
+router.get('/:id', ensureAuthenticated, controller.getTicket);
 
 // all tickets
 router.get('/', ensureAuthenticated, permission.isAdmin, controller.getTickets);
 
 // create ticket
-router.post('/create', ensureAuthenticated, permission.isStaff, validation.checkTicket, controller.createTicket);
+router.post('/create', ensureAuthenticated, validation.checkTicket, controller.createTicket);
 
 // change ticket
 router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateTicket);

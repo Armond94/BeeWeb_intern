@@ -9,4 +9,4 @@ const benefitsHystorySchema = new Schema({
   timestamps: {createdAt: 'created_at'}
 });
 
-module.exports = mongoose.model('benefitsHystory', benefitsHystorySchema);
+module.exports = mongoose.model('benefits_hystory', benefitsHystorySchema);

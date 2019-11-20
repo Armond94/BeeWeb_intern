@@ -14,11 +14,7 @@ class UsersController {
 
   //find same user
   async getSameUser (req, res, next) {
-    console.log('request to users/me');
-    console.log('req.user.id', req.user.id);
-
     try {
-      console.log('req.user.id', req.user.id);
       let user = await req.app.services.users.getUser(req.user.id);
       return res.status(200).send(user);
     } catch (err) {
@@ -33,6 +29,16 @@ class UsersController {
       return res.status(200).send(users);
     } catch (err) {
       return Errors.generateNotFoundError(res, `user`);
+    }
+  };
+
+  //find user benefits
+  async userBenefits (req, res, next) {
+    try {
+      let benefits = await req.app.services.benefits.userBenefits(req.params.id);
+      return res.status(200).send(benefits);
+    } catch (err) {
+      return Errors.generateNotFoundError(res, `benefit`);
     }
   }
 
@@ -49,9 +55,7 @@ class UsersController {
   //create user
   async register (req, res, next) {
     let userObject = {...req.body};
-    console.log('test in controller req.body', req.body);
     delete userObject.repeatPassword;
-    console.log('test in controller req.body delete password', req.body);
     try {
       let user = await req.app.services.users.createUser(userObject);
       return res.status(200).send('successfully registered');
@@ -73,12 +77,8 @@ class UsersController {
   //change user
   async updateUser (req, res, next) {
     let changes = {...req.body};
-    console.log('req.body - ', req.body);
-    console.log('changes - ', changes);
-    console.log('req.params.id ', req.params.id);
     try {
       let user = await req.app.services.users.updateUser(changes, req.params.id);
-      console.log('user - ', user);
       return res.status(200).send(user);
     } catch (err) {
       return Errors.generateUpdateError(res, `update`);

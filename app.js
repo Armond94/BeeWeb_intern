@@ -1,6 +1,6 @@
 //home_work branch (third time)
-// import express from 'express';
-const express = require('express');
+// const express = require('express');
+import express from 'express';
 const bodyParser = require('body-parser');
 const Errors = require('./errors/index');
 const cors = require('cors');
@@ -25,7 +25,7 @@ app.models = {
   benefits: require('./models/benefits'),
   positions: require('./models/positions'),
   candidates: require('./models/candidates'),
-  benefitsHystory: require('./models/benefits_hystory'),
+  benefits_hystory: require('./models/benefits_hystory'),
   tickets: require('./models/tickets')
 };
 
@@ -55,5 +55,5 @@ app.use('/positions', require('./routers/positions'));
 app.use('/candidates', require('./routers/candidates'));
 app.use('/tickets', require('./routers/tickets'));
 
-!process.env.PORT && (process.env.PORT = 3018);
+!process.env.PORT && (process.env.PORT = 3000);
 app.listen(process.env.PORT, () => console.log(`server is listen on port ${process.env.PORT}`));

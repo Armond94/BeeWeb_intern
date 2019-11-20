@@ -7,20 +7,17 @@ let message = 'please fill all fields correct';
 
 class UserValidation {
 
-    checkForRegister (req, res, next) {
-      let keys = Object.keys(req.body);
-      let values = Object.values(req.body);
-      console.log('req.body', req.body);
-      console.log('keys - ', keys);
-      console.log('values - ', values);
-      if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
-        registerationFields.every(item => {
-          return keys.includes(item);
-        });
-        return res.status(400).send(message);
-      }
-      next();
-    };
+  checkForRegister (req, res, next) {
+    let keys = Object.keys(req.body);
+    let values = Object.values(req.body);
+    if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
+      registerationFields.every(item => {
+        return keys.includes(item);
+      });
+      return res.status(400).send(message);
+    }
+    next();
+  };
 
   checkForLogin (req, res, next) {
     let keys = Object.keys(req.body);

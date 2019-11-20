@@ -29,9 +29,18 @@ class BenefitServices {
   };
 
   //give benefit to user
-  async addBenefit (user_id, benefit_id) {
-    const newBenefitsHystory = new this.models.benefitsHystory({user_id, benefit_id});
-    return newBenefitsHystory.save();
+  async addBenefit (benefitObject) {
+    const newBenefits_hystory = new this.models.benefits_hystory(benefitObject);
+    return await newBenefits_hystory.save();
+  };
+
+  //find user benefits
+  async userBenefits (user_id) {
+    let benefits = await this.models.benefits_hystory.find({user_id});
+    if (!benefits || benefits.length === 0) {
+      throw new Error();
+    }
+    return benefits;
   }
 
   //change benefit

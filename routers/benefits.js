@@ -8,7 +8,7 @@ const permission = new UserPermissions();
 const controller = new BenefitsController();
 
 //get benefit by id
-router.get('/:id', ensureAuthenticated, permission.isStaff, controller.getBenefit);
+router.get('/:id', ensureAuthenticated, controller.getBenefit);
 
 //get benefits
 router.get('', ensureAuthenticated, permission.isAdmin, controller.getBenefits);

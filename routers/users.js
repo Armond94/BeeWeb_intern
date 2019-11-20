@@ -7,8 +7,12 @@ const controller = new UsersController();
 const permission = new UserPermissions();
 const validation = new Validations();
 
+
+//get same user
+router.get('/me', ensureAuthenticated, controller.getSameUser);
+
 // find user by id
-router.get('/:id', ensureAuthenticated, permission.isStaff, controller.getUser);
+router.get('/:id', ensureAuthenticated, controller.getUser);
 
 //find all users
 router.get('/', ensureAuthenticated, permission.isAdmin, controller.getUsers);

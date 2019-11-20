@@ -12,6 +12,20 @@ class UsersController {
     }
   };
 
+  //find same user
+  async getSameUser (req, res, next) {
+    console.log('request to users/me');
+    console.log('req.user.id', req.user.id);
+
+    try {
+      console.log('req.user.id', req.user.id);
+      let user = await req.app.services.users.getUser(req.user.id);
+      return res.status(200).send(user);
+    } catch (err) {
+      return Errors.generateNotFoundError(res, `user`);
+    }
+  };
+
   //find all users
   async getUsers (req, res, next) {
     try {

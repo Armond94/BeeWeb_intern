@@ -20,6 +20,6 @@ module.exports = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(409).send(err.message);
   }
 }

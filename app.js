@@ -1,11 +1,12 @@
 //home_work branch (third time)
-// const express = require('express');
 import express from 'express';
-const bodyParser = require('body-parser');
-const Errors = require('./errors/index');
-const cors = require('cors');
-const app = express();
+import bodyParser from 'body-parser';
+import Errors from './errors/index';
+import ROUTES from './routers/index';
+import cors from 'cors';
 
+
+const app = express();
 
 app.use(cors());
 
@@ -20,8 +21,9 @@ app.use(bodyParser.json());
 app.errors = new Errors();
 
 // models
+import usersModel from './models/users';
 app.models = {
-  users: require('./models/users'),
+  users: usersModel,
   benefits: require('./models/benefits'),
   positions: require('./models/positions'),
   candidates: require('./models/candidates'),
@@ -30,12 +32,18 @@ app.models = {
 };
 
 // services
+import UsersServices from './services/users';
+import BenefitsServices from './services/benefits';
+import PositionsServices from './services/positions';
+import CandidatesServices from './services/positions';
+import TicketsServices from './services/tickets';
+//
 app.services = {
-  users: new (require('./services/users'))(app.models, app),
-  benefits: new (require('./services/benefits'))(app.models, app),
-  positions: new (require('./services/positions'))(app.models, app),
-  candidates: new (require('./services/candidates'))(app.models, app),
-  tickets: new (require('./services/candidates'))(app.models, app)
+  users: new UsersServices(app.models, app),
+  benefits: new BenefitsServices(app.models, app),
+  positions: new PositionsServices(app.models, app),
+  candidates: new CandidatesServices(app.models, app),
+  tickets: new TicketsServices(app.models, app)
 };
 
 app.use((req, res, next) => {
@@ -47,13 +55,19 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.send('beeWeb-hr-service1');
 });
+//
+// import userRouter from './routers/users';
+// import benefitRouter from './routers/benefits';
+// import positionRouter from './routers/positions';
+// import candidateRouter from './routers/positions';
+// import ticketRouter from './routers/tickets';
 
 //routers
-app.use('/users', require('./routers/users'));
-app.use('/benefits', require('./routers/benefits'));
-app.use('/positions', require('./routers/positions'));
-app.use('/candidates', require('./routers/candidates'));
-app.use('/tickets', require('./routers/tickets'));
+app.use('/users', ROUTES.userRouter);
+app.use('/benefits', ROUTES.benefitRouter);
+app.use('/positions', ROUTES.positionRouter);
+app.use('/candidates', ROUTES.candidateRouter);
+app.use('/tickets', ROUTES.ticketRouter);
 
 !process.env.PORT && (process.env.PORT = 3000);
 app.listen(process.env.PORT, () => console.log(`server is listen on port ${process.env.PORT}`));

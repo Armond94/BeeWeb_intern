@@ -1,8 +1,12 @@
-const router = require('express').Router();
-const ensureAuthenticated = require('../configs/auth');
-const controller = new (require('../controller/tickets'));
-const permission = new (require('../validations/user_permissions'));
-const validation = new (require('../validations/validations'));
+import express from 'express';
+import ensureAuthenticated from '../configs/auth';
+import Controller from '../controller/tickets';
+import Permission from '../validations/user_permissions';
+import Validation  from '../validations/validations'
+const router = express.Router();
+const controller = new Controller();
+const permission = new Permission();
+const validation = new Validation();
 
 // find ticket
 router.get('/:id', ensureAuthenticated, controller.getTicket);
@@ -19,4 +23,4 @@ router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateTic
 // delete  ticket
 router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteTicket);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const Errors = require('../errors');
+import Errors from '../errors';
 
-class PositionsController {
+export default class PositionsController {
 
   //find position
   async getPosition (req, res, next) {
@@ -54,5 +54,3 @@ class PositionsController {
     }
   };
 };
-
-module.exports = PositionsController;

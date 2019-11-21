@@ -63,4 +63,4 @@ class BenefitServices {
   };
 };
 
-module.exports = BenefitServices;
+export default BenefitServices;

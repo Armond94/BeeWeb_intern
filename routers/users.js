@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const ensureAuthenticated = require('../configs/auth');
-const UsersController = require('../controller/users');
-const Validations = require('../validations/validations');
-const UserPermissions = require('../validations/user_permissions');
+import express from 'express';
+import ensureAuthenticated from '../configs/auth';
+import UsersController from '../controller/users';
+import Validations from '../validations/validations';
+import UserPermissions from '../validations/user_permissions';
+const router = express.Router();
 const controller = new UsersController();
 const permission = new UserPermissions();
 const validation = new Validations();
@@ -34,4 +35,4 @@ router.put('/:id', ensureAuthenticated, permission.chekUpdateStaff, controller.u
 // delete  user
 router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteUser);
 
-module.exports = router;
+export default router;

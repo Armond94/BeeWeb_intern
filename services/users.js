@@ -1,7 +1,7 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-class UserServices {
+export default class UserServices {
   constructor (models, app) {
     this.models = models;
     this.app = app;
@@ -106,5 +106,4 @@ class UserServices {
       return user;
     }
 };
-
-module.exports = UserServices;
+// export default UserServices;

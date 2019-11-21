@@ -48,4 +48,4 @@ class CandidateServices {
   };
 };
 
-module.exports = CandidateServices;
+export default CandidateServices;

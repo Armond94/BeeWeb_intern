@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const positionSchema = new Schema({
@@ -13,4 +13,4 @@ const positionSchema = new Schema({
   timestamps: {createdAt: 'created_at'}
 });
 
-module.exports = mongoose.model('positions', positionSchema);
+export default mongoose.model('positions', positionSchema);

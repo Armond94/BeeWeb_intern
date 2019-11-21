@@ -1,4 +1,4 @@
-class Errors {
+export default class Errors {
 
   static generatePermissionError (res, text=`you dont have such permission`){
     return res.status(400).send(text);
@@ -32,6 +32,4 @@ class Errors {
     return res.status(400).send(`add ${text} failed`);
   };
 
-}
-
-module.exports = Errors;
+};

@@ -66,4 +66,4 @@ class UserValidation {
 
 };
 
-module.exports = UserValidation;
+export default UserValidation;

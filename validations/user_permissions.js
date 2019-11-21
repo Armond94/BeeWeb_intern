@@ -1,4 +1,4 @@
-const Errors = require('../errors');
+import Errors from '../errors';
 const ADMIN_ROLES = ['admin', 'manager'];
 
 class UserPermissions {
@@ -9,16 +9,6 @@ class UserPermissions {
     }
     next();
   };
-
-  // isStaff (req, res, next) {
-  //   if (ADMIN_ROLES.includes(req.user.role)) {
-  //     return next();
-  //   },
-  //   if (JSON.stringify(req.user.id) !== JSON.stringify(req.params.id)) {
-  //     return Errors.generatePermissionError(res);
-  //   }
-  //   next();
-  // }
 
   chekUpdateStaff (req, res, next) {
     if (ADMIN_ROLES.includes(req.user.role)) {
@@ -34,4 +24,4 @@ class UserPermissions {
   };
 };
 
-module.exports = UserPermissions;
+export default UserPermissions;

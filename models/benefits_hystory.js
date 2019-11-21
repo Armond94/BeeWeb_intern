@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const benefitsHystorySchema = new Schema({
@@ -9,4 +9,4 @@ const benefitsHystorySchema = new Schema({
   timestamps: {createdAt: 'created_at'}
 });
 
-module.exports = mongoose.model('benefits_hystory', benefitsHystorySchema);
+export default mongoose.model('benefits_hystory', benefitsHystorySchema);

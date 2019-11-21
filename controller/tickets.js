@@ -1,6 +1,7 @@
-const Error = require('../errors');
+import Errors from '../errors';
 
-class TicketsController {
+export default class TicketsController {
+
   //find and return ticket
   async getTicket (req, res, next) {
     try {
@@ -52,6 +53,4 @@ class TicketsController {
       return Errors.generateDeleteError(res, `ticket`);
     }
   }
-}
-
-module.exports = TicketsController;
+};

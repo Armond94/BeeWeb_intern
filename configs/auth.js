@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const users = require('../models/users');
-const mongoose = require('mongoose');
+import jwt from 'jsonwebtoken';
+import users from '../models/users';
+import mongoose from 'mongoose';
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
   try {
     const token = (req.headers.authorization || '').split(' ')[1];
 
@@ -22,4 +22,4 @@ module.exports = async (req, res, next) => {
   } catch (err) {
     return res.status(409).send(err.message);
   }
-}
+};

@@ -1,6 +1,6 @@
-const Errors = require('../errors');
+import Errors from '../errors';
 
-class UsersController {
+export default class UsersController {
 
   //find user
   async getUser (req, res, next) {
@@ -95,5 +95,3 @@ class UsersController {
     }
   };
 };
-
-module.exports = UsersController;

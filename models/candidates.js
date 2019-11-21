@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const candidateSchema = new Schema({
@@ -12,4 +12,4 @@ const candidateSchema = new Schema({
   timestamps: {createdAt: 'created_at'}
 });
 
-module.exports = mongoose.model('candidates', candidateSchema);
+export default mongoose.model('candidates', candidateSchema);

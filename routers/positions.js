@@ -1,8 +1,12 @@
-const router = require('express').Router();
-const ensureAuthenticated = require('../configs/auth');
-const controller = new (require('../controller/positions'));
-const permission = new (require('../validations/user_permissions'));
-const validation = new (require('../validations/validations'));
+import express from 'express';
+import ensureAuthenticated from '../configs/auth';
+import Controller from '../controller/positions';
+import Permission from '../validations/user_permissions';
+import Validation  from '../validations/validations'
+const router = express.Router();
+const controller = new Controller();
+const permission = new Permission();
+const validation = new Validation();
 
 
 //get position by id
@@ -20,5 +24,4 @@ router.put('', ensureAuthenticated, permission.isAdmin, controller.updatePositio
 //delete position
 router.delete('', ensureAuthenticated, permission.isAdmin, controller.deletePosition);
 
-// export default router;
-module.exports = router;
+export default router;

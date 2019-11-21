@@ -1,6 +1,6 @@
-const Errors = require('../errors');
+import Errors from '../errors';
 
-class CandidatesController {
+export default class CandidatesController {
 
   //find candidate
   async getCandidate (req, res, next) {
@@ -54,5 +54,3 @@ class CandidatesController {
     }
   };
 };
-
-module.exports = CandidatesController;

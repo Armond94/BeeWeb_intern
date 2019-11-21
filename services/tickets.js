@@ -49,4 +49,4 @@ class TicketServices {
   }
 };
 
-module.export = TicketServices;
+export default TicketServices;

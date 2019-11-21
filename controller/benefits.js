@@ -1,6 +1,6 @@
-const Errors = require('../errors');
+import Errors from '../errors';
 
-class BenefitsController {
+export default class BenefitsController {
 
   //find benefit
   async getBenefit (req, res, next) {
@@ -64,5 +64,3 @@ class BenefitsController {
     }
   };
 };
-
-module.exports = BenefitsController;

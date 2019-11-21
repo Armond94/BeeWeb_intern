@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const BenefitsController = require('../controller/benefits');
-const ensureAuthenticated = require('../configs/auth');
-const UserPermissions = require('../validations/user_permissions');
-const Validations = require('../validations/validations');
+import express from 'express';
+import BenefitsController from '../controller/benefits';
+import ensureAuthenticated from '../configs/auth';
+import UserPermissions from '../validations/user_permissions';
+import Validations from '../validations/validations';
+const router = express.Router();
 const validation = new Validations();
 const permission = new UserPermissions();
 const controller = new BenefitsController();
@@ -25,4 +26,4 @@ router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateBen
 //delete benefit
 router.delete('/:id', ensureAuthenticated, permission.isAdmin, controller.deleteBenefit);
 
-module.exports = router;
+export default router;

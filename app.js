@@ -3,10 +3,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import Errors from './errors/index';
 import ROUTES from './routers/index';
+import MODELS from './models/index';
+import SERVICES from './services/index';
 import cors from 'cors';
-
-
 const app = express();
+app.errors = new Errors();
+
 
 app.use(cors());
 
@@ -18,32 +20,22 @@ require(`./configs/${process.env.NODE_ENV}.js`);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.errors = new Errors();
-
-// models
-import usersModel from './models/users';
 app.models = {
-  users: usersModel,
-  benefits: require('./models/benefits'),
-  positions: require('./models/positions'),
-  candidates: require('./models/candidates'),
-  benefits_hystory: require('./models/benefits_hystory'),
-  tickets: require('./models/tickets')
+  users: MODELS.usersModel,
+  tickets: MODELS.ticketsModel,
+  benefits: MODELS.benefitsModel,
+  positions: MODELS.positionsModel,
+  candidates: MODELS.candidatesModel,
+  benefits_hystory: MODELS.benefits_hystoryModel
 };
 
 // services
-import UsersServices from './services/users';
-import BenefitsServices from './services/benefits';
-import PositionsServices from './services/positions';
-import CandidatesServices from './services/positions';
-import TicketsServices from './services/tickets';
-//
 app.services = {
-  users: new UsersServices(app.models, app),
-  benefits: new BenefitsServices(app.models, app),
-  positions: new PositionsServices(app.models, app),
-  candidates: new CandidatesServices(app.models, app),
-  tickets: new TicketsServices(app.models, app)
+  users: new SERVICES.UsersServices(app.models, app),
+  tickets: new SERVICES.TicketsServices(app.models, app),
+  benefits: new SERVICES.BenefitsServices(app.models, app),
+  positions: new SERVICES.PositionsServices(app.models, app),
+  candidates: new SERVICES.CandidatesServices(app.models, app)
 };
 
 app.use((req, res, next) => {
@@ -55,12 +47,6 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.send('beeWeb-hr-service1');
 });
-//
-// import userRouter from './routers/users';
-// import benefitRouter from './routers/benefits';
-// import positionRouter from './routers/positions';
-// import candidateRouter from './routers/positions';
-// import ticketRouter from './routers/tickets';
 
 //routers
 app.use('/users', ROUTES.userRouter);

@@ -9,23 +9,23 @@ export default class Errors {
   };
 
   static generateRegistrationError (res, text) {
-    return res.status(400).send(`!${text} failed`);
+    return res.status(403).send(`!${text} failed`);
   };
 
   static generateLoginError (res, text) {
-    return res.status(400).send(`!${text} failed`);
+    return res.status(401).send(`!${text} failed`);
   };
 
   static generateUpdateError (res, text) {
-    return res.status(400).send(`!${text} failed`);
+    return res.status(403).send(`!${text} failed`);
   };
 
   static generateDeleteError (res, text) {
-    return res.status(400).send(`delete ${text} failed`);
+    return res.status(404).send(`delete ${text} failed`);
   };
 
   static generateCreateError (res, text) {
-    return res.status(400).send(`!create ${text} failed`);
+    return res.status(403).send(`!create ${text} failed`);
   };
 
   static generateAddError (res, text) {

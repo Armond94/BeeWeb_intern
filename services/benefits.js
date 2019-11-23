@@ -23,9 +23,9 @@ class BenefitServices {
   }
 
   //create benefit
-  createBenefit (benefitObject) {
+  async createBenefit (benefitObject) {
     const newBenefit = new this.models.benefits(benefitObject);
-    return newBenefit.save();
+    return await newBenefit.save();
   };
 
   //give benefit to user

@@ -10,11 +10,15 @@ class UserValidation {
   checkForRegister (req, res, next) {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
-    if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword) {
+    if (!registerationFields.every(item => keys.includes(item)) || values.includes('') || req.body.password != req.body.repeatPassword || req.body.password.length < 5) {
       registerationFields.every(item => {
         return keys.includes(item);
       });
-      return res.status(400).send(message);
+        return res.status(400).send(message);
+    };
+    let checkEmailByRegexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!checkEmailByRegexp.test(String(req.body.email).toLowerCase())) {
+      return res.status(400).send(message)
     }
     next();
   };

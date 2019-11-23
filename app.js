@@ -5,12 +5,38 @@ import Errors from './errors/index';
 import ROUTES from './routers/index';
 import MODELS from './models/index';
 import SERVICES from './services/index';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 const app = express();
 app.errors = new Errors();
-
-
 app.use(cors());
+
+const swaggerDefinition = {
+  info: {
+    title: 'Swagger API',
+    version: '1.0.0',
+    description: 'Endpoints to test the routers',
+  },
+  host: 'localhost:3000',
+  basePath: '/',
+  securityDefinitions: {
+    bearerAuth: {
+      type: 'token',
+      name: 'Authorization',
+      scheme: 'bearer',
+      in: 'header',
+    },
+  },
+};
+
+const options = {
+  swaggerDefinition,
+  apis: ['./routers/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //connect mongo
 process.env.NODE_ENV || (process.env.NODE_ENV = 'dev');

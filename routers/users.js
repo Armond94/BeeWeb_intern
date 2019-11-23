@@ -14,6 +14,31 @@ router.get('/me', ensureAuthenticated, controller.getSameUser);
 // find user by id
 router.get('/:id', ensureAuthenticated, permission.isAdmin, controller.getUser);
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *       - Users
+ *     name: Find user by id
+ *     summary: Find a user by id
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: params
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required:
+ *           - id
+ *     responses:
+ *       '200':
+ *         description: A single user object
+ *       '401':
+ *         description: No auth token / no user found in db with that id
+ */
+
+
 //find all users
 router.get('/', ensureAuthenticated, permission.isAdmin, controller.getUsers);
 

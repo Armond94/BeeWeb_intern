@@ -57,8 +57,8 @@ export default class BenefitsController {
 
   async deleteBenefit (req, res, next) {
     try {
-      await req.app.services.benefits.deleteBenefit(req.params.id);
-      return res.status(200).send('benefit succesfully deleted');
+      let benefit = await req.app.services.benefits.deleteBenefit(req.params.id);
+      return res.status(200).send(benefit);
     } catch (err) {
       return Errors.generateDeleteError(res, `benefit`);
     }

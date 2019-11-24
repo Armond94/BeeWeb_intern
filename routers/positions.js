@@ -51,7 +51,7 @@ router.get('', controller.getPositions);
  */
 
 //create position
-router.post('', ensureAuthenticated, permission.isAdmin, validation.checkPosition, controller.createPosition);
+router.post('', controller.createPosition);//ensureAuthenticated, permission.isAdmin, validation.checkPosition,
 /**
  * @swagger
  * /positions:
@@ -79,7 +79,7 @@ router.post('', ensureAuthenticated, permission.isAdmin, validation.checkPositio
  *             required_qualifications:
  *               type: string
  *             deadline:
- *               type: date
+ *               type: string
  *             candidates:
  *               type: string
  *         required:
@@ -88,7 +88,6 @@ router.post('', ensureAuthenticated, permission.isAdmin, validation.checkPositio
  *           - type
  *           - required_qualifications
  *           - deadline
- *           - candidates
  *     responses:
  *       '200':
  *         description: candidate created

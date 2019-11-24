@@ -24,9 +24,9 @@ export default class PositionsController {
 
   //create positions
   async createPosition (req, res, next) {
-    let positionObject = req.body;
+    let positionObject = {...req.body};
     try {
-      let position = await req.app.services.positions.createPosition(obj);
+      let position = await req.app.services.positions.createPosition(positionObject);
       return res.status(200).send(position);
     } catch (err) {
       return Errors.generateCreateError(res, `position`);

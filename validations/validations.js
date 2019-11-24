@@ -53,6 +53,8 @@ class UserValidation {
   checkPosition (req, res, next) {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
+    console.log('keys - ', keys);
+    console.log('values - ', values);
     if (!positionFields.every(item => keys.includes(item)) || values.includes('')) {
       return res.send(message);
     };

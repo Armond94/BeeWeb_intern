@@ -13,14 +13,15 @@ export default class BenefitsController {
   };
 
   //find benefits
-  async getBenefits(req, res) {
+  async getBenefits(req, res, next) {
     try {
-      let benefits = await req.app.services.benefits.getBenefits();
+      let query = {...req.query};
+      let benefits = await req.app.services.benefits.getBenefits(query);
       return res.status(200).send(benefits);
     } catch (err) {
       return Errors.generateNotFoundError(res, `benefit`);
     }
-  }
+  };
 
   //create benefit
   async createBenefit (req, res, next) {
@@ -36,6 +37,7 @@ export default class BenefitsController {
   //give benefit to user
   async addBenefit (req, res, next) {
     let benefitObject = {...req.body};
+    console.log('controller benefitObject - ', benefitObject);
     try {
       let benefits_hystory = await req.app.services.benefits.addBenefit(benefitObject);
       return res.status(200).send(benefits_hystory);

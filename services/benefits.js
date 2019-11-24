@@ -14,8 +14,8 @@ class BenefitServices {
   };
 
   //get benefits
-  async getBenefits() {
-    let benefits = await this.models.benefits.find();
+  async getBenefits(query) {
+    let benefits = await this.models.benefits.find(query);
     if (!benefits || benefits.length === 0) {
       throw new Error();
     }

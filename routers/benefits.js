@@ -34,7 +34,7 @@ router.get('/:id', ensureAuthenticated, controller.getBenefit);
  *         description: No auth token / no benefit found in db with that id
  */
 
-//get benefits
+//find benefits
 router.get('', ensureAuthenticated, permission.isAdmin, controller.getBenefits);
 /**
  * @swagger

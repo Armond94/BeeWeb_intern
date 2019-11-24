@@ -15,7 +15,7 @@ class PositionServices {
 
   //find and return all positions
   async getPostitions () {
-    let positions = await this.models.positions.find({});
+    let positions = await this.models.positions.find();
     if (!positions || positions.length === 0) {
       throw new Error();
     }
@@ -23,9 +23,9 @@ class PositionServices {
   };
 
   //create positin
-  createPosition (obj) {
-    const newPosition = new this.models.positions(obj);
-    return newPosition.save();
+  async createPosition (positionObject) {
+    const newPosition = new this.models.positions(positionObject);
+    return await newPosition.save();
   };
 
   //update position

@@ -2,16 +2,6 @@ import Errors from '../errors';
 
 export default class UsersController {
 
-  //find user
-  async getUser (req, res, next) {
-    try {
-      let user = await req.app.services.users.getUser(req.params.id);
-      return res.status(200).send(user);
-    } catch (err) {
-      return Errors.generateNotFoundError(res, `user`);
-    }
-  };
-
   //find same user
   async getSameUser (req, res, next) {
     try {
@@ -22,10 +12,27 @@ export default class UsersController {
     }
   };
 
+  //find user
+  async getUser (req, res, next) {
+    try {
+      let user = await req.app.services.users.getUser(req.params.id);
+      return res.status(200).send(user);
+    } catch (err) {
+      return Errors.generateNotFoundError(res, `user`);
+    }
+  };
+
   //find all users
   async getUsers (req, res, next) {
+    let limit = req.query.limit;
+    let offset = req.query.offset;
+    if (!req.query.limit || !req.query.offset) {
+      limit = 10;
+      offset = 0;
+    }
+    let query = {};
     try {
-      let users = await req.app.services.users.getUsers();
+      let users = await req.app.services.users.getUsers(query, limit, offset);
       return res.status(200).send(users);
     } catch (err) {
       return Errors.generateNotFoundError(res, `user`);
@@ -45,6 +52,8 @@ export default class UsersController {
   //all users that have benefits
   async usersBenefits (req, res, next) {
     try {
+      let query = {...req.query};
+      console.log('query - ', query);
       let users = await req.app.services.users.usersBenefits();
       return res.status(200).send(users);
     } catch (err) {

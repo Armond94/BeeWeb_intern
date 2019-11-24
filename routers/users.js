@@ -53,7 +53,7 @@ router.get('/:id', ensureAuthenticated, permission.isAdmin, controller.getUser);
  *         description: No auth token / no user found in db with that id
  */
 
-//find all users
+//find users
 router.get('/', ensureAuthenticated, permission.isAdmin, controller.getUsers);
 /**
  * @swagger

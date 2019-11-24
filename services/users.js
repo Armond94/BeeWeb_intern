@@ -16,8 +16,8 @@ export default class UserServices {
     return user;
   };
 
-  //get all users
-  async getUsers () {
+  //get users
+  async getUsers (query, limit, offset) {
     let users = await this.models.users.find({deletedAt: null}, {password: 0});
     if (!users || users.length === 0) {
       throw new Error();
@@ -27,6 +27,7 @@ export default class UserServices {
 
   // all users that have benefits
   async usersBenefits () {
+    // console.log('query in service - ', query);
       let users_id = await this.models.benefits_hystory.distinct('user_id');
       let users = await this.models.users.find({_id: {$in: users_id}, deletedAt: null}, {password: 0});
       if (!users || users.length === 0) {

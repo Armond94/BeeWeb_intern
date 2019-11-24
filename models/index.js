@@ -9,6 +9,7 @@ export default {
   usersModel,
   ticketsModel,
   benefitsModel,
+  positionsModel,
   candidatesModel,
   benefits_hystoryModel
 };

@@ -20,7 +20,16 @@ class BenefitServices {
       throw new Error();
     }
     return benefits;
-  }
+  };
+
+  //
+  async benefitsHistory () {
+    let benefits_history = await this.models.benefits_hystory.find({});
+    if (!benefits_history) {
+      throw new Error();
+    }
+    return benefits_history
+  };
 
   //create benefit
   async createBenefit (benefitObject) {

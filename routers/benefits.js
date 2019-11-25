@@ -54,6 +54,9 @@ router.get('', ensureAuthenticated, permission.isAdmin, controller.getBenefits);
  */
 //create benefit
 
+//get benefit history
+router.get('/users/histories', ensureAuthenticated, permission.isAdmin, controller.benefitsHistory);
+
 //create benefit
 router.post('', ensureAuthenticated, validation.checkBenefitValidation, permission.isAdmin, controller.createBenefit);
 /**
@@ -131,7 +134,7 @@ router.put('/:id', ensureAuthenticated, permission.isAdmin, controller.updateBen
  *     tags:
  *       - Benefits
  *     name: Update benefits
- *     summary: benefits user data
+ *     summary: update benefit data
  *     security:
  *       - bearerAuth: []
  *     consumes:

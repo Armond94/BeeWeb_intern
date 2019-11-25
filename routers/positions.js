@@ -42,7 +42,7 @@ router.get('', controller.getPositions);
  *     tags:
  *       - Positions
  *     name: Find positions
- *     summary: Find positions by id
+ *     summary: Find positions 
  *     responses:
  *       '200':
  *         description: Array of positions object
@@ -51,7 +51,7 @@ router.get('', controller.getPositions);
  */
 
 //create position
-router.post('', controller.createPosition);//ensureAuthenticated, permission.isAdmin, validation.checkPosition,
+router.post('',ensureAuthenticated, permission.isAdmin, validation.checkPosition, controller.createPosition);
 /**
  * @swagger
  * /positions:

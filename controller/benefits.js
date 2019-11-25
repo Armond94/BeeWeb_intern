@@ -25,10 +25,14 @@ export default class BenefitsController {
 
   //
   async benefitsHistory (req, res, next) {
+    console.log('controller');
     try {
+      console.log('controller222222222222');
       let benefits_history = await req.app.services.benefits.benefitsHistory();
+      console.log('benefits_history33333333333', benefits_history);
       res.status(200).send(benefits_history);
     } catch (err) {
+      console.log('err.message44444', err.message);
       return Errors.generateNotFoundError(res, `benefit history`);
     }
   }

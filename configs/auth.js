@@ -18,8 +18,10 @@ export default async (req, res, next) => {
 
     let user = await users.findOne({_id: decoded.userId, deletedAt: null});
     req.user = user;
+    console.log('111 - auth is');
     next();
   } catch (err) {
+    console.log('2222 - auth err');
     return res.status(409).send(err.message);
   }
 };

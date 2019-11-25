@@ -54,8 +54,8 @@ router.get('', ensureAuthenticated, permission.isAdmin, controller.getBenefits);
  */
 //create benefit
 
-//get benefit history
-router.get('/users/histories', ensureAuthenticated, permission.isAdmin, controller.benefitsHistory);
+//get benefit history swaggerum avelacnem
+router.get('/users/histories', ensureAuthenticated, permission.isAdmin, controller.benefitsHistory);  
 
 //create benefit
 router.post('', ensureAuthenticated, validation.checkBenefitValidation, permission.isAdmin, controller.createBenefit);

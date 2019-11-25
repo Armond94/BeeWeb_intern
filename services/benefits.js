@@ -24,8 +24,13 @@ class BenefitServices {
 
   //
   async benefitsHistory () {
-    let benefits_history = await this.models.benefits_hystory.find({});
-    if (!benefits_history) {
+    console.log('services benefitsHistory');
+    let benefits_history = await this.models.benefits_hystory.find();
+    console.log('services benefitsHistory 222222- ', benefits_history);
+
+    if (!benefits_history || benefits.length === 0) {
+      console.log('services benefitsHistory errrror- ', benefits_history);
+
       throw new Error();
     }
     return benefits_history

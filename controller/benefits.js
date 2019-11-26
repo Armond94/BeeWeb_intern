@@ -26,13 +26,13 @@ export default class BenefitsController {
   // get benefit history
   async benefitsHistory (req, res, next) {
     // console.log(req.params.id);
-    // try {
     //   if (!req.query.from || !req.query.to) {
     //     let query = {created_at:{$gte: Date(), created_at: {$lt: req.query.to}}};
     //   }
 
+    try {
       let benefits_history = await req.app.services.benefits.benefitsHistory();
-      res.status(200).send(benefits_history);
+      return res.status(200).send(benefits_history);
     } catch (err) {
       return Errors.generateNotFoundError(res, `benefit history`);
     }

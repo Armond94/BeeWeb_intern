@@ -22,15 +22,10 @@ class BenefitServices {
     return benefits;
   };
 
-  //
+  // find
   async benefitsHistory () {
-    console.log('services benefitsHistory');
-    let benefits_history = await this.models.benefits_hystory.find();
-    console.log('services benefitsHistory 222222- ', benefits_history);
-
-    if (!benefits_history || benefits.length === 0) {
-      console.log('services benefitsHistory errrror- ', benefits_history);
-
+    let benefits_history = await this.models.benefits_histories.findOne({_id}).populate('user_id').populate('benefit_id');
+    if (!benefits_history || benefits_history.length === 0) {
       throw new Error();
     }
     return benefits_history

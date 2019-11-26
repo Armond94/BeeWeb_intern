@@ -3,7 +3,7 @@ import ticketsModel from '../models/tickets';
 import benefitsModel from '../models/benefits';
 import positionsModel from '../models/positions';
 import candidatesModel from '../models/candidates';
-import benefits_hystoryModel from '../models/benefits_hystory';
+import benefits_historiesModel from '../models/benefits_histories';
 
 export default {
   usersModel,
@@ -11,5 +11,5 @@ export default {
   benefitsModel,
   positionsModel,
   candidatesModel,
-  benefits_hystoryModel
+  benefits_historiesModel
 };

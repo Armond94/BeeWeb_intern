@@ -32,7 +32,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  apis: ['./routers/*.js'],
+  apis: ['./swagger_docs/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -52,7 +52,7 @@ app.models = {
   benefits: MODELS.benefitsModel,
   positions: MODELS.positionsModel,
   candidates: MODELS.candidatesModel,
-  benefits_hystory: MODELS.benefits_hystoryModel
+  benefits_histories: MODELS.benefits_historiesModel
 };
 
 // services

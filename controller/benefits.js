@@ -23,19 +23,20 @@ export default class BenefitsController {
     }
   };
 
-  //
+  // get benefit history
   async benefitsHistory (req, res, next) {
-    console.log('controller');
-    try {
-      console.log('controller222222222222');
+    // console.log(req.params.id);
+    // try {
+    //   if (!req.query.from || !req.query.to) {
+    //     let query = {created_at:{$gte: Date(), created_at: {$lt: req.query.to}}};
+    //   }
+
       let benefits_history = await req.app.services.benefits.benefitsHistory();
-      console.log('benefits_history33333333333', benefits_history);
       res.status(200).send(benefits_history);
     } catch (err) {
-      console.log('err.message44444', err.message);
       return Errors.generateNotFoundError(res, `benefit history`);
     }
-  }
+  };
 
   //create benefit
   async createBenefit (req, res, next) {
@@ -70,6 +71,7 @@ export default class BenefitsController {
     }
   };
 
+  //delete benefit
   async deleteBenefit (req, res, next) {
     try {
       let benefit = await req.app.services.benefits.deleteBenefit(req.params.id);

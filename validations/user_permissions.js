@@ -8,7 +8,6 @@ class UserPermissions {
       console.log(3333, 'admin error');
       return Errors.generatePermissionError(res);
     }
-    console.log(4444, 'admin is ok');
     next();
   };
 

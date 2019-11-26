@@ -50,7 +50,7 @@ class BenefitServices {
       throw new Error();
     }
     return benefits;
-  }
+  };
 
   //change benefit
   async updateBenefit (_id, obj) {

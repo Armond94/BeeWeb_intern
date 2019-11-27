@@ -4,7 +4,7 @@ class BenefitServices {
     this.app = app;
   };
 
-  //get benefit
+  //find benefit
   async getBenefit (_id) {
     let benefit = await this.models.benefits.findOne({_id});
     if (!benefit) {
@@ -13,18 +13,20 @@ class BenefitServices {
     return benefit;
   };
 
-  //get benefits
+  //find benefits
   async getBenefits(query) {
-    let benefits = await this.models.benefits.find(query);
+    let benefits = await this.models.benefits.find(query.search).limit(parseInt(query.limit)).skip(parseInt(query.offset));
     if (!benefits || benefits.length === 0) {
       throw new Error();
     }
     return benefits;
   };
 
-  // find
-  async benefitsHistory () {
-    let benefits_history = await this.models.benefits_histories.findOne({_id}).populate('user_id').populate('benefit_id');
+  // find benefit history
+  async benefitsHistory (query) {
+    let benefits_history = await this.models.benefits_histories.find(query.search).limit(parseInt(query.limit)).skip(query.offset)
+      .populate('user_id')
+      .populate('benefit_id');
     if (!benefits_history || benefits_history.length === 0) {
       throw new Error();
     }

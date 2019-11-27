@@ -1,4 +1,5 @@
 import Errors from '../errors';
+import Queries from '../helpers/generateQuery';
 
 export default class TicketsController {
 
@@ -14,8 +15,9 @@ export default class TicketsController {
 
   //find and return tickets
   async getTickets (req, res, next) {
+    let query = Queries.generateTicketQuery(req);
     try {
-      let tickets = await req.app.services.tickets.getTicket();
+      let tickets = await req.app.services.tickets.getTicket(query);
       return res.status(200).send(tickets)
     } catch (err) {
       return Errors.generateNotFoundError(res, `ticket`);

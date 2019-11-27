@@ -14,8 +14,8 @@ class TicketServices {
   };
 
   //find and return tickets
-  async getTickets () {
-    let tickets = await this.models.tickets.find({});
+  async getTickets (query) {
+    let tickets = await this.models.tickets.find(query.search).limit(parseInt(query.limit)).skip(parseInt(query.offset));
     if (!tickets || tickets.length === 0) {
       throw new Error();
     }
@@ -40,7 +40,6 @@ class TicketServices {
 
   //delete and return ticket
   async deleteTicket (_id) {
-    //user-i mejic jnjem
     let ticket = await this.models.tickets.findOneAndDelete({_id});
     if (!ticket) {
         throw new Error();

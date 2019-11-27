@@ -3,12 +3,13 @@ const Schema = mongoose.Schema;
 
 const ticketSchema = new Schema({
   userId: {type:  Schema.ObjectId, required: true},
+  description: {type: String, required: true},
   startDate:{type: String, required: true},
   endDate: {type: String, required: true},
   confirmed: {type: Boolean, default: false}
 },
 {
   timestamps: {createdAt: 'created_at'}
-})
+});
 
 export default mongoose.model('tickets', ticketSchema);

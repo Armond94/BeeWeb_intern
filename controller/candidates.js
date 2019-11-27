@@ -1,4 +1,5 @@
 import Errors from '../errors';
+import Queries from '../helpers/generateQuery';
 
 export default class CandidatesController {
 
@@ -14,8 +15,9 @@ export default class CandidatesController {
 
   //find candidates
   async getCandidates (req, res, next) {
+    let query = Queries.generateCandidateQuery(req);
     try {
-      let candidates = await req.app.services.getCandidates();
+      let candidates = await req.app.services.candidates.getCandidates(query);
       return res.status(200).send(candidates);
     } catch (err) {
       return Errors.generateNotFoundError(res, `candidate`);

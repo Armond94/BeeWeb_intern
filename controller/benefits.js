@@ -1,4 +1,6 @@
 import Errors from '../errors';
+import Queries from '../helpers/generateQuery';
+
 
 export default class BenefitsController {
 
@@ -14,8 +16,8 @@ export default class BenefitsController {
 
   //find benefits
   async getBenefits(req, res, next) {
+    let query = Queries.generateBenefitQuery(req);
     try {
-      let query = {...req.query};
       let benefits = await req.app.services.benefits.getBenefits(query);
       return res.status(200).send(benefits);
     } catch (err) {
@@ -25,13 +27,9 @@ export default class BenefitsController {
 
   // get benefit history
   async benefitsHistory (req, res, next) {
-    // console.log(req.params.id);
-    //   if (!req.query.from || !req.query.to) {
-    //     let query = {created_at:{$gte: Date(), created_at: {$lt: req.query.to}}};
-    //   }
-
+    let query = Queries.generateBenefitHistoryQuery(req);
     try {
-      let benefits_history = await req.app.services.benefits.benefitsHistory();
+      let benefits_history = await req.app.services.benefits.benefitsHistory(query);
       return res.status(200).send(benefits_history);
     } catch (err) {
       return Errors.generateNotFoundError(res, `benefit history`);

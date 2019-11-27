@@ -6,6 +6,7 @@ const candidateSchema = new Schema({
   lastName: {type: String, required: true},
   email: {type: String, required: true},
   phoneNumber: {type: Number, required: true},
+  selected: {type: String, default: false}
   // cv: {type: Buffer, required: true}
 },
 {

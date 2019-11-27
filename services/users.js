@@ -16,9 +16,9 @@ export default class UserServices {
     return user;
   };
 
-  //get users
-  async getUsers (query, limit, offset) {
-    let users = await this.models.users.find({deletedAt: null}, {password: 0});
+  //find users
+  async getUsers (query) {
+    let users = await this.models.users.find(query.search, {password: 0}).limit(parseInt(query.limit)).skip(parseInt(query.offset));
     if (!users || users.length === 0) {
       throw new Error();
     }
@@ -87,7 +87,6 @@ export default class UserServices {
         changes.password = hashedPassword;
       }
       let user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
-      console.log('service update console user - ', user);
       if (!user) {
         throw new Error();
       }

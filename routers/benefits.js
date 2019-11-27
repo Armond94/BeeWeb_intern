@@ -9,7 +9,7 @@ const permission = new UserPermissions();
 const controller = new BenefitsController();
 
 //get benefit history swagger
-router.get('/users/histories/:id', ensureAuthenticated, permission.isAdmin, controller.benefitsHistory);
+router.get('/users/histories', ensureAuthenticated, permission.isAdmin, controller.benefitsHistory);
 
 //get benefit by id
 router.get('/:id', ensureAuthenticated, controller.getBenefit);

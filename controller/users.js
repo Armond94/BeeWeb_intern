@@ -1,4 +1,5 @@
 import Errors from '../errors';
+import Queries from '../helpers/generateQuery';
 
 export default class UsersController {
 
@@ -12,7 +13,7 @@ export default class UsersController {
     }
   };
 
-  //find user
+  //find user by id
   async getUser (req, res, next) {
     try {
       let user = await req.app.services.users.getUser(req.params.id);
@@ -22,17 +23,11 @@ export default class UsersController {
     }
   };
 
-  //find all users
+  //find users
   async getUsers (req, res, next) {
-    let limit = req.query.limit;
-    let offset = req.query.offset;
-    if (!req.query.limit || !req.query.offset) {
-      limit = 10;
-      offset = 0;
-    }
-    let query = {};
+    let query = Queries.generateUserQuery(req);
     try {
-      let users = await req.app.services.users.getUsers(query, limit, offset);
+      let users = await req.app.services.users.getUsers(query);
       return res.status(200).send(users);
     } catch (err) {
       return Errors.generateNotFoundError(res, `user`);

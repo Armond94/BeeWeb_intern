@@ -13,9 +13,9 @@ class PositionServices {
     return position;
   };
 
-  //find and return all positions
-  async getPostitions () {
-    let positions = await this.models.positions.find();
+  //find and return positions
+  async getPostitions (query) {
+    let positions = await this.models.positions.find(query.search).limit(parseInt(query.limit)).skip(parseInt(query.offset));
     if (!positions || positions.length === 0) {
       throw new Error();
     }

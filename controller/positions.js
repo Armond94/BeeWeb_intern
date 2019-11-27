@@ -1,4 +1,5 @@
 import Errors from '../errors';
+import Queries from '../helpers/generateQuery';
 
 export default class PositionsController {
 
@@ -12,10 +13,11 @@ export default class PositionsController {
     }
   };
 
-  //get all positions
+  //find positions
   async getPositions (req, res, next) {
+    let query = Queries.generatePositionQuery(req);
     try {
-      let positions = await req.app.services.positions.getPostitions();
+      let positions = await req.app.services.positions.getPostitions(query);
       return res.status(200).send(positions);
     } catch (err) {
       return Errors.generateNotFoundError(res, `position`);

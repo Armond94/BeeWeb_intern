@@ -52,6 +52,13 @@
  *     summary: Find users
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit, offset, age
+ *         schema:
+ *           type: string
+ *         required:
+ *           - limit, offset
  *     responses:
  *       '200':
  *         description: Array of users object

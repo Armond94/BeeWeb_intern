@@ -6,7 +6,7 @@ class PositionServices {
 
   //find and return position
   async getPostition (_id) {
-    let position = await this.models.positions.findOne({_id});
+    let position = await this.models.positions.findOne({_id: _id, deletedAt: null});
     if (!position) {
       throw new Error();
     }
@@ -30,7 +30,7 @@ class PositionServices {
 
   //update position
   async updatePosition (_id, obj) {
-    let position = await this.models.positions.findOneAndUpdate({_id}, obj, {new: true});
+    let position = await this.models.positions.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
     if (!position) {
       throw new Error();
     }
@@ -40,7 +40,7 @@ class PositionServices {
   //delete position
   async deletePosition (_id) {
     let candidates = await this.models.candidates.updateMany({}, {$pull: {positions: _id}}, {new: true});
-    let position = await this.models.positions.findOneAndDelete({_id});
+    let position = await this.models.positions.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
     if (!position) {
       throw new Error();
     }

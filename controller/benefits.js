@@ -51,8 +51,8 @@ export default class BenefitsController {
   async addBenefit (req, res, next) {
     let benefitObject = {...req.body};
     try {
-      let benefits_hystory = await req.app.services.benefits.addBenefit(benefitObject);
-      return res.status(200).send(benefits_hystory);
+      let benefits_history = await req.app.services.benefits.addBenefit(benefitObject);
+      return res.status(200).send(benefits_history);
     } catch (err) {
       return Errors.generateAddError(res, `benefit`);
     }

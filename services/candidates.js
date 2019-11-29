@@ -6,7 +6,7 @@ class CandidateServices {
 
   //find candidate by id
   async getCandidate (_id) {
-    let candidate = await this.models.candidates.findOne({_id});
+    let candidate = await this.models.candidates.findOne({_id: _id, deletedAt: null});
     if (!candidate) {
       throw new Error();
     }
@@ -26,7 +26,7 @@ class CandidateServices {
   async createCandidate (position_id, obj) {
     const newCandidate = new this.models.candidates(obj);
     let candidate = await newCandidate.save();
-    let position = await this.models.positions.findOneAndUpdate({_id: position_id}, {$addToSet: {candidates: candidate._id}}, {new: true});
+    let position = await this.models.positions.findOneAndUpdate({_id: position_id, deletedAt: null}, {$addToSet: {candidates: candidate._id}}, {new: true});
     if (!candidate || !position) {
       throw new Error();
     }
@@ -35,7 +35,7 @@ class CandidateServices {
 
   //update candidate
   async changeCandidate (_id, obj) {
-    const candidate = await this.models.candidates.findOneAndUpdate(_id, obj, {new: true});
+    const candidate = await this.models.candidates.findOneAndUpdate({_id:_id, deletedAt: null}, obj, {new: true});
     if (!candidate) {
       throw new Error();
     }
@@ -45,7 +45,7 @@ class CandidateServices {
   //delete candidate
   async deleteCandidate (_id) {
     let positions = await this.models.positions.updateMany({}, {$pull: {candidates: _id}}, {new: true});
-    let candidate = await this.models.candidates.findOneAndDelete({_id});
+    let candidate = await this.models.candidates.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
     if (!candidate) {
         throw new Error();
     }

@@ -3,8 +3,8 @@ import Queries from '../helpers/generateQuery';
 
 export default class UsersController {
 
-  //find same user
-  async getSameUser (req, res, next) {
+  //find current user
+  async getCurrentUser (req, res, next) {
     try {
       let user = await req.app.services.users.getUser(req.user.id);
       return res.status(200).send(user);

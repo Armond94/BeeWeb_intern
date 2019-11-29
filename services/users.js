@@ -97,7 +97,7 @@ export default class UserServices {
   //delete user
   async deleteUser(_id) {
       const benefits = await this.models.benefits.updateMany({}, {$pull: {users: _id}}, {new: true});
-      const user = await this.models.users.findOneAndUpdate({_id}, {deletedAt: Date.now()}, {new: true});
+      const user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
       if (!user) {
         throw new Error();
       }

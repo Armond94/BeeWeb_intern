@@ -6,7 +6,7 @@ class BenefitServices {
 
   //find benefit
   async getBenefit (_id) {
-    let benefit = await this.models.benefits.findOne({_id});
+    let benefit = await this.models.benefits.findOne({_id, deletedAt: null});
     if (!benefit) {
       throw new Error();
     }
@@ -41,13 +41,13 @@ class BenefitServices {
 
   //give benefit to user
   async addBenefit (benefitObject) {
-    const newBenefits_hystory = new this.models.benefits_hystory(benefitObject);
-    return await newBenefits_hystory.save();
+    const newBenefits_history = new this.models.benefits_histories(benefitObject);
+    return await newBenefits_history.save();
   };
 
   //find user benefits
   async userBenefits (user_id) {
-    let benefits = await this.models.benefits_hystory.find({user_id});
+    let benefits = await this.models.benefits_hystory.find({user_id: user_id, deletedAt: null});
     if (!benefits || benefits.length === 0) {
       throw new Error();
     }
@@ -56,7 +56,7 @@ class BenefitServices {
 
   //change benefit
   async updateBenefit (_id, obj) {
-    const benefit = await this.models.benefits.findOneAndUpdate(_id, obj, {new: true});
+    const benefit = await this.models.benefits.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
     if (!benefit) {
       throw new Error();
     }
@@ -66,7 +66,7 @@ class BenefitServices {
   //delete benefit
   async deleteBenefit (_id) {
     let users = await this.models.users.updateMany({}, {$pull: {benefits: _id}}, {new: true});
-    let benefit = await this.models.benefits.findOneAndDelete({_id});
+    let benefit = await this.models.benefits.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
     if (!benefit) {
         throw new Error();
     }

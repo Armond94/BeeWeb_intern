@@ -1,8 +1,9 @@
 let registerationFields = ['firstName', 'lastName', 'email', 'role', 'birthday', 'phoneNumber', 'password', 'repeatPassword'];
 let loginFields = ['email', 'password'];
 let benefitFields = ['title', 'description'];
-let positionFields = ['title', 'description', 'type', 'required_qualifications', 'deadline', 'candidates'];
+let positionFields = ['title', 'description', 'type', 'required_qualifications', 'deadline'];
 let ticket = ['userId', 'startDate', 'endDate'];
+let benefitsHistoryFields = ['user_id', 'benefit_id'];
 let message = 'please fill all fields correct';
 
 class UserValidation {
@@ -41,6 +42,15 @@ class UserValidation {
     next();
   };
 
+  checkBenefitHistory (req, res, next) {
+    let keys = Object.keys(req.body);
+    let values = Object.values(req.body);
+    if (!benefitsHistoryFields.every(item => keys.includes(item)) || values.includes('')) {
+      return res.status(400).send(message);
+    };
+    next();
+  }
+
   checkCandidate (req, res, next) {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
@@ -54,7 +64,7 @@ class UserValidation {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
     if (!positionFields.every(item => keys.includes(item)) || values.includes('')) {
-      return res.send(message);
+      return res.status(400).send(message);
     };
     next();
   };

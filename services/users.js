@@ -83,8 +83,7 @@ export default class UserServices {
   async updateUser (changes, _id) {
       if (changes.password) {
         const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(changes.password, salt);
-        changes.password = hashedPassword;
+        changes.password = bcrypt.hashSync(changes.password, salt);
       }
       let user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, changes, {new: true});
       if (!user) {
@@ -103,6 +102,5 @@ export default class UserServices {
       }
       user.password = null;
       return user;
-    }
+    };
 };
-// export default UserServices;

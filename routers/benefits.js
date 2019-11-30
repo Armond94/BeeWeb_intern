@@ -21,7 +21,7 @@ router.get('', ensureAuthenticated, checkPermission.isAdmin, controller.getBenef
 router.post('', ensureAuthenticated, validation.checkBenefitValidation, checkPermission.isAdmin, controller.createBenefit);
 
 // give benefit to user
-router.post('/user', ensureAuthenticated, checkPermission.isAdmin, controller.addBenefit);
+router.post('/user', ensureAuthenticated, validation.checkBenefitHistory, checkPermission.isAdmin, controller.addBenefit);
 
 //change benefit
 router.put('/:id', ensureAuthenticated, checkPermission.isAdmin, controller.updateBenefit);

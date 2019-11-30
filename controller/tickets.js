@@ -17,8 +17,9 @@ export default class TicketsController {
   async getTickets (req, res, next) {
     let query = Queries.generateTicketQuery(req);
     try {
+      let count = await req.app.services.count.countTickets(query.search);
       let tickets = await req.app.services.tickets.getTicket(query);
-      return res.status(200).send(tickets)
+      return res.status(200).send({tickets, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `ticket`);
     }

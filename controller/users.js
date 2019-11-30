@@ -26,9 +26,10 @@ export default class UsersController {
   //find users
   async getUsers (req, res, next) {
     let query = Queries.generateUserQuery(req);
+    let count = await req.app.services.count.countUsers(query.search);
     try {
       let users = await req.app.services.users.getUsers(query);
-      return res.status(200).send(users);
+      return res.status(200).send({users, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `user`);
     }
@@ -48,7 +49,6 @@ export default class UsersController {
   async usersBenefits (req, res, next) {
     try {
       let query = {...req.query};
-      console.log('query - ', query);
       let users = await req.app.services.users.usersBenefits();
       return res.status(200).send(users);
     } catch (err) {

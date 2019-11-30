@@ -17,8 +17,9 @@ export default class CandidatesController {
   async getCandidates (req, res, next) {
     let query = Queries.generateCandidateQuery(req);
     try {
+      let count = await req.app.services.count.countCandidates(query.search);
       let candidates = await req.app.services.candidates.getCandidates(query);
-      return res.status(200).send(candidates);
+      return res.status(200).send({candidates, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `candidate`);
     }

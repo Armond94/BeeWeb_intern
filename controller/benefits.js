@@ -18,8 +18,9 @@ export default class BenefitsController {
   async getBenefits(req, res, next) {
     let query = Queries.generateBenefitQuery(req);
     try {
+      let count = await req.app.services.count.countBenefits(query.search);
       let benefits = await req.app.services.benefits.getBenefits(query);
-      return res.status(200).send(benefits);
+      return res.status(200).send({benefits, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `benefit`);
     }

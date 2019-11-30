@@ -8,6 +8,7 @@ import SERVICES from './services/index';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
+
 const app = express();
 app.errors = new Errors();
 app.use(cors());
@@ -61,7 +62,8 @@ app.services = {
   tickets: new SERVICES.TicketsServices(app.models, app),
   benefits: new SERVICES.BenefitsServices(app.models, app),
   positions: new SERVICES.PositionsServices(app.models, app),
-  candidates: new SERVICES.CandidatesServices(app.models, app)
+  candidates: new SERVICES.CandidatesServices(app.models, app),
+  count: new SERVICES.Count(app.models)
 };
 
 app.use((req, res, next) => {

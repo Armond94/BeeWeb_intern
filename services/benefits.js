@@ -56,7 +56,7 @@ class BenefitServices {
 
   //change benefit
   async updateBenefit (_id, obj) {
-    const benefit = await this.models.benefits.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
+    const benefit = await this.models.benefits.findOneAndUpdate({_id, deletedAt: null}, obj, {new: true});
     if (!benefit) {
       throw new Error();
     }

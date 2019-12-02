@@ -15,7 +15,7 @@ export default class Auth {
       const decoded = jwt.verify(token, process.env.JWT_KEY);
 
       if (!decoded) {
-        throw new Error('authorization failed, invalid token');
+        throw new Error('invalid token');
       }
 
       req.user = await users.findOne({_id: decoded.userId, deletedAt: null});

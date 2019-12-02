@@ -84,12 +84,12 @@
 //change position
 /**
  * @swagger
- * /candidates/:id:
+ * /positions/:id:
  *   put:
  *     tags:
- *       - Candidates
- *     name: Update candidate
- *     summary: Update candidate data
+ *       - positions
+ *     name: Update positions
+ *     summary: Update positions data
  *     security:
  *       - bearerAuth: []
  *     consumes:
@@ -118,9 +118,9 @@
  *           - id
  *     responses:
  *       '200':
- *         description: candidates data updated
+ *         description: position data updated
  *       '403':
- *         description: No authorization / candidates not updated
+ *         description: No authorization / position not updated
  */
 
 //delete position

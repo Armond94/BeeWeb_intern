@@ -1,6 +1,6 @@
 export default {
   "key": "secret",
   "refreshTokenKey": "refreshTokenSecret",
-  "tokenLife": 900,
+  "tokenLife": 9000,
   "refreshTokenLife": 86400
 };

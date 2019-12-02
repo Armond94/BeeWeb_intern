@@ -30,7 +30,7 @@ class PositionServices {
 
   //update position
   async updatePosition (_id, obj) {
-    let position = await this.models.positions.findOneAndUpdate({_id: _id, deletedAt: null}, obj, {new: true});
+    let position = await this.models.positions.findOneAndUpdate({_id, deletedAt: null}, obj, {new: true});
     if (!position) {
       throw new Error();
     }

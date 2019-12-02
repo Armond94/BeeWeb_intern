@@ -38,7 +38,7 @@ export default class PositionsController {
 
   //update position
   async updatePosition (req, res, next) {
-    let obj = req.body;
+    let obj = {...req.body};
     try {
       let position = await req.app.services.positions.updatePosition(req.params.id, obj);
       return res.status(200).send(position);

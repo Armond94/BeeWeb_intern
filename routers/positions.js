@@ -19,7 +19,7 @@ router.get('', controller.getPositions);
 router.post('', auth.checkToken, checkPermission.isAdmin, validation.checkPosition, controller.createPosition);
 
 //change position
-router.put('', auth.checkToken, checkPermission.isAdmin, controller.updatePosition);
+router.put('/:id', auth.checkToken, checkPermission.isAdmin, controller.updatePosition);
 
 //delete position
 router.delete('', auth.checkToken, checkPermission.isAdmin, controller.deletePosition);

@@ -10,6 +10,7 @@ const userSchema = new Schema({
   phoneNumber: {type: Number, required: true},
   salary: {type: Number, default: 0},
   password: {type: String, required: true},
+  avatar: {data: Buffer, content_type: String},
   deletedAt: {type: Date, default: null}
 },
 {

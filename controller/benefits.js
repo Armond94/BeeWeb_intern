@@ -61,7 +61,7 @@ export default class BenefitsController {
 
   //update benefit
   async updateBenefit (req, res, next) {
-    const obj = req.body;
+    const obj = {...req.body};
     try {
       const benefit = await req.app.services.benefits.updateBenefit(req.params.id, obj);
       return res.status(200).send(benefit);

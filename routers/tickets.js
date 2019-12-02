@@ -1,26 +1,27 @@
 import express from 'express';
-import ensureAuthenticated from '../configs/auth';
 import Controller from '../controller/tickets';
 import CheckPermission from '../validations/user_permissions';
-import Validation  from '../validations/validations'
+import Validation  from '../validations/validations';
+import Auth from '../configs/auth';
+const auth = new Auth();
 const router = express.Router();
 const controller = new Controller();
 const checkPermission = new CheckPermission();
 const validation = new Validation();
 
 // find ticket
-router.get('/:id', ensureAuthenticated, controller.getTicket);
+router.get('/:id', auth.checkToken, controller.getTicket);
 
 // all tickets
-router.get('/', ensureAuthenticated, checkPermission.isAdmin, controller.getTickets);
+router.get('/', auth.checkToken, checkPermission.isAdmin, controller.getTickets);
 
 // create ticket
-router.post('/create', ensureAuthenticated, validation.checkTicket, controller.createTicket);
+router.post('/create', auth.checkToken, validation.checkTicket, controller.createTicket);
 
 // change ticket
-router.put('/:id', ensureAuthenticated, checkPermission.isAdmin, controller.updateTicket);
+router.put('/:id', auth.checkToken, checkPermission.isAdmin, controller.updateTicket);
 
 // delete  ticket
-router.delete('/:id', ensureAuthenticated, checkPermission.isAdmin, controller.deleteTicket);
+router.delete('/:id', auth.checkToken, checkPermission.isAdmin, controller.deleteTicket);
 
 export default router;

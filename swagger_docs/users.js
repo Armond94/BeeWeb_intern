@@ -1,11 +1,11 @@
-//get same user
+//get current user
 /**
  * @swagger
  * /users/me:
  *   get:
  *     tags:
  *       - Users
- *     name: Find same user
+ *     name: Find current user
  *     summary: Find same user
  *     security:
  *       - bearerAuth: []

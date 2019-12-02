@@ -78,6 +78,16 @@ export default class UsersController {
     }
   };
 
+  //refresh token
+  async refreshToken (req, res, next) {
+    try {
+      let result = await req.app.services.users.refreshToken(req.body.refreshToken, req.user.email);
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(401).send('refresh token not exists');
+    }
+  };
+
   //change user
   async updateUser (req, res, next) {
     let changes = {...req.body};
@@ -88,6 +98,17 @@ export default class UsersController {
       return Errors.generateUpdateError(res, `update`);
     }
   };
+
+  //upload avatar
+  // async upload (req, res, next) {
+  //   try {
+  //     let result = await req.app.services.users.upload(req.files.file, req.params.id);
+  //     return res.status(200).send(result);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //     return res.send('upload failed');
+  //   }
+  // };
 
   //delete user
   async deleteUser (req, res, next) {

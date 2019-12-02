@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import jwtConfigs from '../configs/jwt_configs';
+import fs from 'fs';
 
 export default class UserServices {
   constructor (models, app) {
@@ -10,6 +12,7 @@ export default class UserServices {
   //find user by id
   async getUser (_id) {
     let user = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0});
+    console.log(user);
     if (!user) {
       throw new Error();
     }
@@ -72,11 +75,26 @@ export default class UserServices {
         if (!isMatch) {
            return reject('login failed');
         }
-        const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || 'secret', { expiresIn: '24h'});
+        const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || jwtConfigs.key, { expiresIn: jwtConfigs.tokenLife});
+        const refreshToken = jwt.sign({email: email, userId: user._id}, process.env.REFRESH_TOKEN_KEY || jwtConfigs.refreshTokenKey, { expiresIn: jwtConfigs.refreshTokenLife});
         user.password = null;
-        return resolve({user, token});
+        return resolve({user, token, refreshToken});
       });
     });
+  };
+
+  //refresh token
+  async refreshToken (refreshToken, email) {
+    let user = await this.models.users.findOne({email: email, deletedAt: null});
+    if (!user) {
+      throw new Error();
+    }
+    if(!refreshToken) {
+      throw new Error();
+    }
+    const TOKEN = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || jwtConfigs.key, { expiresIn: jwtConfigs.tokenLife});
+    const REFRESH_TOKEN = jwt.sign({email: email, userId: user._id}, process.env.REFRESH_TOKEN_KEY || jwtConfigs.refreshTokenKey, { expiresIn: jwtConfigs.refreshTokenLife});
+    return {TOKEN, REFRESH_TOKEN};
   };
 
   //change user
@@ -92,6 +110,16 @@ export default class UserServices {
       user.password = null;
       return user;
   };
+
+  //upload avatar
+  // async upload (file, _id) {
+  //   if (!file) {
+  //     throw new Error();
+  //   };
+  //   let image = fs.readFileSync(file.path);
+  //   let user = await this.models.users.findOneAndUpdate({_id, deletedAt: null}, {avatar: {data: image, content_type: file.headers['content-type']}}, {new: true});
+  //   return user;
+  // };
 
   //delete user
   async deleteUser(_id) {

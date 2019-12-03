@@ -6,7 +6,7 @@
  *     tags:
  *       - Users
  *     name: Find current user
- *     summary: Find same user
+ *     summary: Find current user
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -61,7 +61,7 @@
  *           - limit, offset
  *     responses:
  *       '200':
- *         description: Array of users object
+ *         description: Array of users object and all users count 
  *       '400':
  *         description: No auth token / no user found in db
  */
@@ -74,7 +74,7 @@
  *     tags:
  *       - Users
  *     name: Find users that have benefits
- *     summary: Find a users
+ *     summary: Find all users that have benefits
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -91,8 +91,8 @@
  *   get:
  *     tags:
  *       - Users
- *     name: Find user benefit
- *     summary: Find a user benefit by id
+ *     name: Find user benefits
+ *     summary: Find a user benefits by user id
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -104,9 +104,9 @@
  *           - id
  *     responses:
  *       '200':
- *         description: A single benefit object
+ *         description: benefits objects
  *       '400':
- *         description: No auth token / no benefit found in db with that id
+ *         description: No auth token / no benefits found in db with that id
  */
 
 // signup
@@ -157,9 +157,9 @@
  *           - repeatpassword
  *     responses:
  *       '200':
- *         description: User created
+ *         description: successfully registered
  *       '403':
- *         description: Username or email already taken
+ *         description: email already exists
  */
 
 // signin
@@ -191,10 +191,40 @@
  *           - password
  *     responses:
  *       '200':
- *         description: User found and logged in successfully
+ *         description: successfully logged in
  *       '401':
- *         description: Bad username, not found in db
+ *         description: login failed
  */
+
+ // refresh token
+ /**
+  * @swagger
+  * /users/token:
+  *   post:
+  *     tags:
+  *       - Users
+  *     name: token
+  *     summary: refresh token
+  *     produces:
+  *       - application/json
+  *     consumes:
+  *       - application/json
+  *     parameters:
+  *       - name: body
+  *         in: body
+  *         schema:
+  *           type: String
+  *           properties:
+  *             refreshToken:
+  *               type: string
+  *         required:
+  *           - refreshToken
+  *     responses:
+  *       '200':
+  *         description: token successfully refreshed
+  *       '401':
+  *         description: refresh token not exists
+  */
 
 // change user
 /**
@@ -268,5 +298,5 @@
  *       '200':
  *         description: User successfully deleted
  *       '404':
- *         description: No user in db with that name
+ *         description: No user in db with that id
  */

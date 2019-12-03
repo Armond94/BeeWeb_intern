@@ -16,7 +16,7 @@ router.get('/:id', auth.checkToken, checkPermission.isAdmin, controller.getCandi
 router.get('', auth.checkToken, checkPermission.isAdmin, controller.getCandidates);
 
 //create candidate
-router.post('', validation.checkCandidate, controller.createCandidate);
+router.post('/:id', validation.checkCandidate, controller.createCandidate);
 
 //change candidate
 router.put('/:id', auth.checkToken, checkPermission.isAdmin, controller.changeCandidate);

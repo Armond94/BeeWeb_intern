@@ -8,8 +8,8 @@ import SERVICES from './services/index';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-
 const app = express();
+
 app.errors = new Errors();
 app.use(cors());
 
@@ -53,17 +53,18 @@ app.models = {
   benefits: MODELS.benefitsModel,
   positions: MODELS.positionsModel,
   candidates: MODELS.candidatesModel,
-  benefits_histories: MODELS.benefits_historiesModel
+  benefit_histories: MODELS.benefit_historiesModel
 };
 
 // services
 app.services = {
+  count: new SERVICES.Count(app.models),
   users: new SERVICES.UsersServices(app.models, app),
   tickets: new SERVICES.TicketsServices(app.models, app),
   benefits: new SERVICES.BenefitsServices(app.models, app),
   positions: new SERVICES.PositionsServices(app.models, app),
   candidates: new SERVICES.CandidatesServices(app.models, app),
-  count: new SERVICES.Count(app.models)
+  benefit_histories: new SERVICES.BenefitHistoriesServices(app.models, app)
 };
 
 app.use((req, res, next) => {
@@ -78,10 +79,11 @@ app.get('/', (req, res) => {
 
 //routers
 app.use('/users', ROUTES.userRouter);
+app.use('/tickets', ROUTES.ticketRouter);
 app.use('/benefits', ROUTES.benefitRouter);
 app.use('/positions', ROUTES.positionRouter);
 app.use('/candidates', ROUTES.candidateRouter);
-app.use('/tickets', ROUTES.ticketRouter);
+app.use('/benefit/histories', ROUTES.benefit_histories);
 
 !process.env.PORT && (process.env.PORT = 3000);
 app.listen(process.env.PORT, () => console.log(`server is listen on port ${process.env.PORT}`));

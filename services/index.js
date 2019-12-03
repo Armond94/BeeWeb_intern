@@ -1,9 +1,10 @@
+import Count from '../helpers/count';
 import UsersServices from '../services/users';
 import BenefitsServices from '../services/benefits';
 import PositionsServices from '../services/positions';
 import CandidatesServices from '../services/candidates';
 import TicketsServices from '../services/tickets';
-import Count from '../helpers/count';
+import BenefitHistoriesServices from '../services/benefit_histories';
 
 export default {
   Count,
@@ -11,5 +12,6 @@ export default {
   TicketsServices,
   BenefitsServices,
   PositionsServices,
-  CandidatesServices
+  CandidatesServices,
+  BenefitHistoriesServices
 };

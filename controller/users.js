@@ -45,10 +45,9 @@ export default class UsersController {
     }
   }
 
-  //all users that have benefits
+  //find all users that have benefits
   async usersBenefits (req, res, next) {
     try {
-      let query = {...req.query};
       let users = await req.app.services.users.usersBenefits();
       return res.status(200).send(users);
     } catch (err) {
@@ -84,7 +83,7 @@ export default class UsersController {
       let result = await req.app.services.users.refreshToken(req.body.refreshToken, req.user.email);
       return res.status(200).json(result);
     } catch (err) {
-      return res.status(401).send('refresh token not exists');
+      return generateRefreshTokenError(res, `refresh token`);
     }
   };
 

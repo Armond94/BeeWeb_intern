@@ -34,9 +34,16 @@
  *     summary: find candidates
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit, offset
+ *         schema:
+ *           type: string
+ *         required:
+ *           - limit, offset
  *     responses:
  *       '200':
- *         description: Array of candidates object
+ *         description: Array of candidates object and count of all candidates that match in query
  *       '400':
  *         description: No auth token / no candidate found in db
  */

@@ -27,7 +27,7 @@ export default class CandidatesController {
 
   //create candidate
   async createCandidate (req, res, next) {
-    let candidateObject = req.body;
+    let candidateObject = {...req.body};
     try {
       let candidate = await req.app.services.candidates.createCandidate(req.params.id, candidateObject);
       return res.status(200).send(candidate);
@@ -38,9 +38,9 @@ export default class CandidatesController {
 
   //change candidate
   async changeCandidate (req, res, next) {
-    const obj = req.body;
+    const obj = {...req.body};
     try {
-      const candidate = await req.app.services.candidate.changecandidate(req.params.id, obj);
+      const candidate = await req.app.services.candidates.changeCandidate(req.params.id, obj);
       return res.status(200).send(candidate);
     } catch (err) {
       return Errors.generateUpdateError(res, `candidate`);

@@ -5,7 +5,6 @@ class UserPermissions {
 
   isAdmin (req, res, next) {
     if (!ADMIN_ROLES.includes(req.user.role)) {
-      console.log(3333, 'admin error');
       return Errors.generatePermissionError(res);
     }
     next();

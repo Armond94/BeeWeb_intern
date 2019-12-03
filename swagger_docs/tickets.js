@@ -36,7 +36,7 @@
  *       - bearerAuth: []
  *     responses:
  *       '200':
- *         description: Array of ticket object
+ *         description: Array of ticket object and and count
  *       '400':
  *         description: No auth token / no ticket found in db
  */

@@ -18,7 +18,7 @@ export default class TicketsController {
     let query = Queries.generateTicketQuery(req);
     try {
       let count = await req.app.services.count.countTickets(query.search);
-      let tickets = await req.app.services.tickets.getTicket(query);
+      let tickets = await req.app.services.tickets.getTickets(query);
       return res.status(200).send({tickets, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `ticket`);
@@ -38,9 +38,9 @@ export default class TicketsController {
 
   //change and return ticket
   async updateTicket (req, res, next) {
-    let obj = {...req.body};
+    let changes = {...req.body};
     try {
-      let ticket = await req.app.services.tickets.updateTicket(obj);
+      let ticket = await req.app.services.tickets.updateTicket(req.params.id, changes);
       return res.status(200).send(ticket);
     } catch (err) {
       return Errors.generateUpdateError(res, `ticket`);

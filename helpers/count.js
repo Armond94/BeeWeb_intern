@@ -29,9 +29,9 @@ export default class  Count {
     return count;
   };
 
-  async countBenefits_histories (query) {
-    let count = await this.models.benefits_histories.countDocuments(query);
+  async countBenefitHistories (query) {
+    let count = await this.models.benefit_histories.countDocuments(query);
     return count;
   };
-
+  
 };

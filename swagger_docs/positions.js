@@ -30,9 +30,16 @@
  *       - Positions
  *     name: Find positions
  *     summary: Find positions
+ *     parameters:
+ *       - in: query
+ *         name: limit, offset, title
+ *         schema:
+ *           type: string
+ *         required:
+ *           - limit, offset title
  *     responses:
  *       '200':
- *         description: Array of positions object
+ *         description: Array of positions object and count
  *       '400':
  *         description:no positions found in db
  */
@@ -76,9 +83,9 @@
  *           - deadline
  *     responses:
  *       '200':
- *         description: candidate created
+ *         description: position created
  *       '403':
- *         description: candidate not created
+ *         description: position not created
  */
 
 //change position
@@ -87,7 +94,7 @@
  * /positions/:id:
  *   put:
  *     tags:
- *       - positions
+ *       - Positions
  *     name: Update positions
  *     summary: Update positions data
  *     security:
@@ -147,7 +154,7 @@
  *           - id
  *     responses:
  *       '200':
- *         description: candidate successfully deleted
+ *         description: position successfully deleted
  *       '404':
- *         description: No candidate in db with that id
+ *         description: No position in db with that id
  */

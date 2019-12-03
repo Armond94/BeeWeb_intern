@@ -11,7 +11,6 @@ const validation = new Validations();
 const controller = new UsersController();
 const checkPermission = new CheckPermissions();
 
-
 // get current user
 router.get('/me', auth.checkToken, controller.getCurrentUser);
 

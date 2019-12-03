@@ -89,4 +89,13 @@ export default class GenerateQuery {
     return query;
   };
 
+  static generateBenefitHistoriesQuery (req) {
+    let query = {
+      limit: req.query.limit || DEFAULT_LIMIT,
+      offset: req.query.offset || DEFAULT_OFFSET,
+      search: {deletedAt: null}
+    };
+    return query;
+  };
+
 };

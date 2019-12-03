@@ -13,10 +13,10 @@ const validation = new Validation();
 router.get('/:id', auth.checkToken, controller.getTicket);
 
 // all tickets
-router.get('/', auth.checkToken, checkPermission.isAdmin, controller.getTickets);
+router.get('', auth.checkToken, checkPermission.isAdmin, controller.getTickets);
 
 // create ticket
-router.post('/create', auth.checkToken, validation.checkTicket, controller.createTicket);
+router.post('', auth.checkToken, validation.checkTicket, controller.createTicket);
 
 // change ticket
 router.put('/:id', auth.checkToken, checkPermission.isAdmin, controller.updateTicket);

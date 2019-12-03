@@ -12,7 +12,6 @@ export default class UserServices {
   //find user by id
   async getUser (_id) {
     let user = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0});
-    console.log(user);
     if (!user) {
       throw new Error();
     }
@@ -30,7 +29,7 @@ export default class UserServices {
 
   // all users that have benefits
   async usersBenefits () {
-      let users_id = await this.models.benefits_hystory.distinct('user_id');
+      let users_id = await this.models.benefit_histories.distinct('user_id');
       let users = await this.models.users.find({_id: {$in: users_id}, deletedAt: null}, {password: 0});
       if (!users || users.length === 0) {
         throw new Error();

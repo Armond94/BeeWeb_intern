@@ -26,7 +26,7 @@ class TicketServices {
   async createTicket (TicketObject) {
     //user-i mej avelacnem
     const newTicket = new this.models.tickets(TicketObject);
-    return newPosition.save();
+    return newTicket.save();
   };
 
   //update and return ticket
@@ -40,7 +40,7 @@ class TicketServices {
 
   //delete and return ticket
   async deleteTicket (_id) {
-    let ticket = await this.models.tickets.findOneAndDelete({_id});
+    let ticket = await this.models.tickets.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
     if (!ticket) {
         throw new Error();
     }

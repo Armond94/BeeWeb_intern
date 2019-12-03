@@ -26,17 +26,6 @@ export default class BenefitsController {
     }
   };
 
-  // get benefit history
-  async benefitsHistory (req, res, next) {
-    let query = Queries.generateBenefitHistoryQuery(req);
-    try {
-      let benefits_history = await req.app.services.benefits.benefitsHistory(query);
-      return res.status(200).send(benefits_history);
-    } catch (err) {
-      return Errors.generateNotFoundError(res, `benefit history`);
-    }
-  };
-
   //create benefit
   async createBenefit (req, res, next) {
     const benefitObject = {...req.body};
@@ -45,17 +34,6 @@ export default class BenefitsController {
       return res.status(200).send(benefit);
     } catch (err) {
       return Errors.generateCreateError(res, `benefit`);
-    }
-  };
-
-  //give benefit to user
-  async addBenefit (req, res, next) {
-    let benefitObject = {...req.body};
-    try {
-      let benefits_history = await req.app.services.benefits.addBenefit(benefitObject);
-      return res.status(200).send(benefits_history);
-    } catch (err) {
-      return Errors.generateAddError(res, `benefit`);
     }
   };
 
@@ -76,6 +54,7 @@ export default class BenefitsController {
       let benefit = await req.app.services.benefits.deleteBenefit(req.params.id);
       return res.status(200).send(benefit);
     } catch (err) {
+      console.log(err.message);
       return Errors.generateDeleteError(res, `benefit`);
     }
   };

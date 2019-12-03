@@ -6,7 +6,7 @@
  *     tags:
  *       - Benefits
  *     name: Find benefit by id
- *     summary: Find a benefit r by id
+ *     summary: Find a benefit by id
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -34,6 +34,13 @@
  *     summary: Find benefits
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit, offset, title
+ *         schema:
+ *           type: string
+ *         required:
+ *           - limit, offset title
  *     responses:
  *       '200':
  *         description: Array of benefits object
@@ -77,38 +84,6 @@
  *         description:  benefit not created
  */
 
-// give benefit to user
-/**
- * @swagger
- * /benefits/user:
- *   post:
- *     tags:
- *       - Benefits
- *     name: add
- *     summary: give benefit to user
- *     produces:
- *       - application/json
- *     consumes:
- *       - application/json
- *     parameters:
- *       - name: body
- *         in: body
- *         schema:
- *           type: object
- *           properties:
- *             title:
- *               type: string
- *             description:
- *               type: string
- *         required:
- *           - title
- *           - description
- *     responses:
- *       '200':
- *         description: benefit successfully added
- *       '401':
- *         description: benefit not added
- */
 
 //change benefit
 /**
@@ -117,7 +92,7 @@
  *   put:
  *     tags:
  *       - Benefits
- *     name: Update benefits
+ *     name: Update benefit
  *     summary: update benefit data
  *     security:
  *       - bearerAuth: []
@@ -151,8 +126,8 @@
  *   delete:
  *     tags:
  *       - Benefits
- *     name: Delete benefits
- *     summary: Delete benefits
+ *     name: Delete benefit
+ *     summary: Delete benefit
  *     security:
  *       - bearerAuth: []
  *     consumes:

@@ -2,8 +2,9 @@ let registerationFields = ['firstName', 'lastName', 'email', 'role', 'birthday',
 let loginFields = ['email', 'password'];
 let benefitFields = ['title', 'description'];
 let positionFields = ['title', 'description', 'type', 'required_qualifications', 'deadline'];
-let ticket = ['userId', 'startDate', 'endDate'];
+let ticketFields = ['userId', 'description', 'startDate', 'endDate'];
 let benefitsHistoryFields = ['user_id', 'benefit_id'];
+let candidateFields = ['firstName', 'lastName', 'email', 'phoneNumber'];
 let message = 'please fill all fields correct';
 
 class UserValidation {
@@ -54,7 +55,7 @@ class UserValidation {
   checkCandidate (req, res, next) {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
-    if (!benefitFields.every(item => keys.includes(item)) || values.includes('')) {
+    if (!candidateFields.every(item => keys.includes(item)) || values.includes('')) {
       return res.status(400).send(message);
     };
     next();
@@ -72,7 +73,7 @@ class UserValidation {
   checkTicket (req, res, next) {
     let keys = Object.keys(req.body);
     let values = Object.values(req.body);
-    if (!positionFields.every(item => keys.includes(item)) || values.includes('')) {
+    if (!ticketFields.every(item => keys.includes(item)) || values.includes('')) {
       return res.send(message);
     };
     next();

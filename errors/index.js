@@ -17,7 +17,7 @@ export default class Errors {
   };
 
   static generateUpdateError (res, text) {
-    return res.status(403).send(`!${text} failed`);
+    return res.status(403).send(`update !${text} failed`);
   };
 
   static generateDeleteError (res, text) {
@@ -31,5 +31,9 @@ export default class Errors {
   static generateAddError (res, text) {
     return res.status(400).send(`add ${text} failed`);
   };
+
+  static generateRefreshTokenError(res, text) {
+    return res.status(401).send(`${text} failed`);
+  }
 
 };

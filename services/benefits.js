@@ -22,36 +22,10 @@ class BenefitServices {
     return benefits;
   };
 
-  // find benefit history
-  async benefitsHistory (query) {
-    let benefits_history = await this.models.benefits_histories.find(query.search).limit(parseInt(query.limit)).skip(query.offset)
-      .populate('user_id')
-      .populate('benefit_id');
-    if (!benefits_history || benefits_history.length === 0) {
-      throw new Error();
-    }
-    return benefits_history
-  };
-
   //create benefit
   async createBenefit (benefitObject) {
     const newBenefit = new this.models.benefits(benefitObject);
     return await newBenefit.save();
-  };
-
-  //give benefit to user
-  async addBenefit (benefitObject) {
-    const newBenefits_history = new this.models.benefits_histories(benefitObject);
-    return await newBenefits_history.save();
-  };
-
-  //find user benefits
-  async userBenefits (user_id) {
-    let benefits = await this.models.benefits_hystory.find({user_id: user_id, deletedAt: null});
-    if (!benefits || benefits.length === 0) {
-      throw new Error();
-    }
-    return benefits;
   };
 
   //change benefit
@@ -64,9 +38,9 @@ class BenefitServices {
   };
 
   //delete benefit
-  async deleteBenefit (_id) {
-    let users = await this.models.users.updateMany({}, {$pull: {benefits: _id}}, {new: true});
-    let benefit = await this.models.benefits.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
+  async deleteBenefit (benefit_id) {
+    let benefit_histories = await this.models.benefit_histories.updateMany({benefit_id, deletedAt: null}, {deletedAt: Date.now()});
+    let benefit = await this.models.benefits.findOneAndUpdate({_id: benefit_id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
     if (!benefit) {
         throw new Error();
     }

@@ -22,6 +22,6 @@ router.post('', auth.checkToken, checkPermission.isAdmin, validation.checkPositi
 router.put('/:id', auth.checkToken, checkPermission.isAdmin, controller.updatePosition);
 
 //delete position
-router.delete('', auth.checkToken, checkPermission.isAdmin, controller.deletePosition);
+router.delete('/:id', auth.checkToken, checkPermission.isAdmin, controller.deletePosition);
 
 export default router;

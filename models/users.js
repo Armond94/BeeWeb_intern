@@ -11,7 +11,10 @@ const userSchema = new Schema({
   salary: {type: Number, default: 0},
   password: {type: String, required: true},
   avatar: {data: Buffer, content_type: String},
-  deletedAt: {type: Date, default: null}
+  deletedAt: {type: Date, default: null},
+  dayOff: {type: Number, default: 0},
+  rating: {type: Number, default: 0},
+  tickets: [{type: Schema.Types.ObjectId, ref: 'tickets'}]
 },
 {
   timestamps: {createdAt: 'created_at'}

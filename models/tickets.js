@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const ticketSchema = new Schema({
-  userId: {type:  Schema.ObjectId, required: true},
+  userId: {type: Schema.Types.ObjectId, required: true, ref: 'users'},
   description: {type: String, required: true},
   startDate:{type: String, required: true},
   endDate: {type: String, required: true},

@@ -6,7 +6,8 @@ class TicketServices {
 
   //find and return ticket
   async getTicket (_id) {
-    let ticket = await this.models.tickets.findOne({_id});
+    let ticket = await this.models.tickets.findOne({_id})
+      .populate('user_id');
     if (!ticket) {
       throw new Error();
     }

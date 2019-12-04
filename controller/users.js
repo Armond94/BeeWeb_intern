@@ -98,7 +98,18 @@ export default class UsersController {
     }
   };
 
-  //upload avatar
+  async rateUser (req, res, next) {
+    try {
+      let result = await req.app.services.users.rate(req.body.rating, req.params.id, req.user.id);
+      let user = await req.app.services.users.updateUserRating(req.params.id);
+      return res.status(200).send(user);
+    } catch (err) {
+      console.log(err.message);
+      return Errors.generateUpdateError(res, `update`);
+    }
+  };
+
+  // //upload avatar
   // async upload (req, res, next) {
   //   try {
   //     let result = await req.app.services.users.upload(req.files.file, req.params.id);

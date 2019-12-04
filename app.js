@@ -10,6 +10,8 @@ import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 const app = express();
 
+// import cron from './configs/cron/index';
+
 app.errors = new Errors();
 app.use(cors());
 
@@ -49,6 +51,7 @@ app.use(bodyParser.json());
 
 app.models = {
   users: MODELS.usersModel,
+  ratings: MODELS.ratingsModel,
   tickets: MODELS.ticketsModel,
   benefits: MODELS.benefitsModel,
   positions: MODELS.positionsModel,

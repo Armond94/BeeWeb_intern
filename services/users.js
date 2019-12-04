@@ -3,11 +3,13 @@ import jwt from 'jsonwebtoken';
 import jwtConfigs from '../configs/jwt_configs';
 import fs from 'fs';
 
+
 export default class UserServices {
   constructor (models, app) {
     this.models = models;
     this.app = app;
   };
+
 
   //find user by id
   async getUser (_id) {
@@ -110,13 +112,45 @@ export default class UserServices {
       return user;
   };
 
-  //upload avatar
+  // chek and create rating object
+  async rate (rating, user_id, admin_id) {
+    let from = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
+    let ratingDoc = await this.models.ratings.findOne({user_id, admin_id, created_at: {$gte: from}});
+
+    if (ratingDoc) {
+      throw new Error('cant rate');
+    }
+
+    let newRating = new this.models.ratings({user_id, admin_id, rating});
+    return newRating.save();
+ };
+
+ // count average rate and update user
+ async updateUserRating (user_id) {
+   let ratings = await this.models.ratings.find({user_id}, {rating: 1});
+
+   let object = ratings.reduce((acc, item) => {
+     acc[`${item.rating}`] || (acc[`${item.rating}`] = 0);
+     acc[`${item.rating}`]++;
+
+     return acc;
+   }, {});
+
+   let firstArg = Object.keys(object).reduce((res, el) => res + el * object[el], 0);
+   let secondArg = Object.values(object).reduce((sum, el) => sum + el, 0);
+
+   return this.updateUser({rating: firstArg / secondArg}, user_id);
+ }
+
+  // //upload avatar
   // async upload (file, _id) {
+  //   let fileName = file.fileName;
+  //   let content = fs.readFileSync(file.path);
   //   if (!file) {
   //     throw new Error();
   //   };
-  //   let image = fs.readFileSync(file.path);
-  //   let user = await this.models.users.findOneAndUpdate({_id, deletedAt: null}, {avatar: {data: image, content_type: file.headers['content-type']}}, {new: true});
+  //
+  //   // let user = await this.models.users.findOneAndUpdate({_id, deletedAt: null}, {avatar: {data: image, content_type: file.headers['content-type']}}, {new: true});
   //   return user;
   // };
 

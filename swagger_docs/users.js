@@ -61,7 +61,7 @@
  *           - limit, offset
  *     responses:
  *       '200':
- *         description: Array of users object and all users count 
+ *         description: Array of users object and all users count
  *       '400':
  *         description: No auth token / no user found in db
  */
@@ -226,7 +226,7 @@
   *         description: refresh token not exists
   */
 
-// change user
+// update user
 /**
  * @swagger
  * /users/:id:
@@ -271,6 +271,39 @@
  *       '403':
  *         description: No authorization / user not found
  */
+
+//rate user
+ /**
+  * @swagger
+  * /users/rate/:id:
+  *   put:
+  *     tags:
+  *       - Users
+  *     name: Rate User
+  *     summary: rate user
+  *     security:
+  *       - bearerAuth: []
+  *     consumes:
+  *       - application/json
+  *     produces:
+  *       - application/json
+  *     parameters:
+  *       - name: body
+  *         in: body
+  *         schema:
+  *           type: object
+  *           properties:
+  *             rating:
+  *               type: string
+  *         required:
+  *           - id
+  *     responses:
+  *       '200':
+  *         description: successfully rate user
+  *       '403':
+  *         description: No authorization / user not found
+  */
+
 
 // delete  user
 /**

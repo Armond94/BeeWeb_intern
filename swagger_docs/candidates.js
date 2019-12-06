@@ -75,11 +75,14 @@
  *               type: string
  *             phoneNumber:
  *               type: number
+ *             position:
+ *               type: string
  *         required:
  *           - firstName
  *           - lastName
  *           - email
  *           - phoneNumber
+ *           - position
  *     responses:
  *       '200':
  *         description: candidate created

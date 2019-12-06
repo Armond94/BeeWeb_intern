@@ -4,7 +4,7 @@ let benefitFields = ['title', 'description'];
 let positionFields = ['title', 'description', 'type', 'required_qualifications', 'deadline'];
 let ticketFields = ['userId', 'description', 'startDate', 'endDate'];
 let benefitsHistoryFields = ['user_id', 'benefit_id'];
-let candidateFields = ['firstName', 'lastName', 'email', 'phoneNumber'];
+let candidateFields = ['firstName', 'lastName', 'email', 'phoneNumber', 'position', 'birthday', 'education'];
 let message = 'please fill all fields correct';
 
 class UserValidation {

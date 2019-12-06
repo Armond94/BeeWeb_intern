@@ -7,10 +7,10 @@ import MODELS from './models/index';
 import SERVICES from './services/index';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import cron from './configs/cron/index';
 import cors from 'cors';
 const app = express();
 
-// import cron from './configs/cron/index';
 
 app.errors = new Errors();
 app.use(cors());

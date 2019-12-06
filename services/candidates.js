@@ -7,7 +7,7 @@ class CandidateServices {
   //find candidate by id
   async getCandidate (_id) {
     let candidate = await this.models.candidates.findOne({_id: _id, deletedAt: null})
-      populate('candidates');
+      populate('position');
     if (!candidate) {
       throw new Error();
     }
@@ -24,10 +24,10 @@ class CandidateServices {
   };
 
   //create candidate
-  async createCandidate (position_id, obj) {
-    const newCandidate = new this.models.candidates(obj);
+  async createCandidate (candidateObject) {
+    const newCandidate = new this.models.candidates(candidateObject);
     let candidate = await newCandidate.save();
-    let position = await this.models.positions.findOneAndUpdate({_id: position_id, deletedAt: null}, {$addToSet: {candidates: candidate._id}}, {new: true});
+    let position = await this.models.positions.findOneAndUpdate({_id: candidateObject.position, deletedAt: null}, {$addToSet: {candidates: candidate._id}}, {new: true});
     if (!candidate || !position) {
       throw new Error();
     }

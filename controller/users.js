@@ -98,13 +98,13 @@ export default class UsersController {
     }
   };
 
+  //rate user
   async rateUser (req, res, next) {
     try {
       let result = await req.app.services.users.rate(req.body.rating, req.params.id, req.user.id);
       let user = await req.app.services.users.updateUserRating(req.params.id);
       return res.status(200).send(user);
     } catch (err) {
-      console.log(err.message);
       return Errors.generateUpdateError(res, `update`);
     }
   };

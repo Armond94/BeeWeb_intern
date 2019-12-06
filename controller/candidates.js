@@ -29,7 +29,7 @@ export default class CandidatesController {
   async createCandidate (req, res, next) {
     let candidateObject = {...req.body};
     try {
-      let candidate = await req.app.services.candidates.createCandidate(req.params.id, candidateObject);
+      let candidate = await req.app.services.candidates.createCandidate(candidateObject);
       return res.status(200).send(candidate);
     } catch (err) {
       return Errors.generateCreateError(res, `candidate`);

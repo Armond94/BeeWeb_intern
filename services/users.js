@@ -13,7 +13,8 @@ export default class UserServices {
 
   //find user by id
   async getUser (_id) {
-    let user = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0});
+    let user = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0})
+      .populate('tickets');
     if (!user) {
       throw new Error();
     }
@@ -22,7 +23,8 @@ export default class UserServices {
 
   //find users
   async getUsers (query) {
-    let users = await this.models.users.find(query.search, {password: 0}).limit(parseInt(query.limit)).skip(parseInt(query.offset));
+    let users = await this.models.users.find(query.search, {password: 0}).limit(parseInt(query.limit)).skip(parseInt(query.offset))
+      .populate('tickets');
     if (!users || users.length === 0) {
       throw new Error();
     }
@@ -117,7 +119,7 @@ export default class UserServices {
     let from = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
     let ratingDoc = await this.models.ratings.findOne({user_id, admin_id, created_at: {$gte: from}});
 
-    if (ratingDoc) {
+    if (ratingDoc || rating <= 0 || rating > 10) {
       throw new Error('cant rate');
     }
 

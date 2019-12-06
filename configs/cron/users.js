@@ -1,8 +1,12 @@
 import cron from 'node-cron';
-import users from '../../models/users';
-import mongoose from 'mongoose';
+import userModel from '../../models/users';
 
+const userCron1 = cron.schedule('0 0 0 * * *', async () => {
+  let from = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
 
-cron.schedule('* * * * *', async () => {
-  let users = await users.updateMany({}, { $inc: { dayOff: 1 } });
+  if (users && users.length > 0) {
+    let users = await userModel.updateMany({created_at: {$gte: from}, deletedAt: null}, {$inc: {dayOff: 1}});
+  }
 });
+
+export { userCron1 };

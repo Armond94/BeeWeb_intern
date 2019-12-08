@@ -109,10 +109,10 @@ export default class UsersController {
     }
   };
 
-  // //upload avatar
+  //upload avatar
   // async upload (req, res, next) {
   //   try {
-  //     let result = await req.app.services.users.upload(req.files.file, req.params.id);
+  //     let result = await req.app.services.users.upload(req.files.file);
   //     return res.status(200).send(result);
   //   } catch (err) {
   //     console.log(err.message);

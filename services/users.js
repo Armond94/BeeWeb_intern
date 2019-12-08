@@ -144,16 +144,15 @@ export default class UserServices {
    return this.updateUser({rating: firstArg / secondArg}, user_id);
  }
 
-  // //upload avatar
-  // async upload (file, _id) {
+  //upload avatar
+  // async upload (file) {
   //   let fileName = file.fileName;
   //   let content = fs.readFileSync(file.path);
   //   if (!file) {
   //     throw new Error();
   //   };
+  //   console.log('content - ', file);
   //
-  //   // let user = await this.models.users.findOneAndUpdate({_id, deletedAt: null}, {avatar: {data: image, content_type: file.headers['content-type']}}, {new: true});
-  //   return user;
   // };
 
   //delete user

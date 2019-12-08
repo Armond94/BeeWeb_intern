@@ -11,7 +11,6 @@ import cron from './configs/cron/index';
 import cors from 'cors';
 const app = express();
 
-
 app.errors = new Errors();
 app.use(cors());
 

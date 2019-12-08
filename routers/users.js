@@ -27,7 +27,7 @@ router.get('/benefits/exists', auth.checkToken, checkPermission.isAdmin, control
 router.get('/benefits/:id', auth.checkToken, controller.userBenefits);
 
 // signup
-router.post('/register', validation.checkForRegister, controller.register);//auth.checkToken, checkPermission.isAdmin, 
+router.post('/register', validation.checkForRegister, controller.register);//auth.checkToken, checkPermission.isAdmin,
 
 // signin
 router.post('/login', validation.checkForLogin, controller.login);
@@ -35,14 +35,15 @@ router.post('/login', validation.checkForLogin, controller.login);
 //refresh token
 router.post('/token', auth.checkRefreshToken, controller.refreshToken);
 
+// upload photo
+// router.post('/upload', auth.checkToken, multipartMiddleware, controller.upload);
+
 // change user
 router.put('/:id', auth.checkToken, checkPermission.chekUpdateStaff, controller.updateUser);
 
 //rate user
 router.put('/rate/:id', auth.checkToken, checkPermission.isAdmin, controller.rateUser);
 
-// upload photo
-// router.post('/upload/avatar/:id', auth.checkToken, multipartMiddleware, controller.upload);,
 
 // delete  user
 router.delete('/:id', auth.checkToken, checkPermission.isAdmin, controller.deleteUser);

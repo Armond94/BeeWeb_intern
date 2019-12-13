@@ -10,9 +10,10 @@ import swaggerUi from 'swagger-ui-express';
 import cron from './configs/cron/index';
 import cors from 'cors';
 const app = express();
-
 app.errors = new Errors();
 app.use(cors());
+import methodOverride from 'method-override';
+
 
 const swaggerDefinition = {
   info: {
@@ -44,7 +45,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 process.env.NODE_ENV || (process.env.NODE_ENV = 'dev');
 require(`./configs/${process.env.NODE_ENV}.js`);
 
-//bodyParser
+
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -76,7 +78,7 @@ app.use((req, res, next) => {
 
 //test endpoint for homepage
 app.get('/', (req, res) => {
-  res.send('beeWeb-hr-service1');
+  res.send('beeWeb-hr-service');
 });
 
 //routers

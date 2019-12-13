@@ -1,3 +1,13 @@
+import mongoose from "mongoose";
+import Grid from "gridfs-stream";
+const conn = mongoose.connection;
+Grid.mongo = mongoose.mongo;
+var gfs;
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('cv');
+});
+
 class CandidateServices {
   constructor(models, app) {
     this.models = models;
@@ -12,6 +22,17 @@ class CandidateServices {
       throw new Error();
     }
     return candidate;
+  };
+
+  //get cv
+  async getCV (_id) {
+    let candidate = await this.models.candidates.findOne({_id});
+    let cv = await gfs.files.findOne({cv: candidate.cv});
+    if (!cv) {
+      throw new Error('!cv not found');
+    }
+      const readstream = gfs.createReadStream(cv.filename);
+      return readstream;
   };
 
   //find candidates
@@ -41,6 +62,17 @@ class CandidateServices {
       throw new Error();
     }
     return candidate;
+  };
+
+  // removeCV
+  async removeCV (_id) {
+    let candidate = await this.models.candidates.findOne({_id, deleted: null});
+    let gridStor = await gfs.remove({filename: candidate.cv, root: 'uploads'});
+    let newCandidate = await this.models.candidates.findOneAndUpdate({_id, deleted: null}, {avatar: null}, {new: true});
+    if (!gridStor) {
+      throw new Error();
+    };
+    return gridStor;
   };
 
   //delete candidate

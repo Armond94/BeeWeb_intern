@@ -87,7 +87,7 @@ export default class UsersController {
     }
   };
 
-  //change user
+  //update user data
   async updateUser (req, res, next) {
     let changes = {...req.body};
     try {
@@ -109,16 +109,37 @@ export default class UsersController {
     }
   };
 
-  //upload avatar
-  // async upload (req, res, next) {
-  //   try {
-  //     let result = await req.app.services.users.upload(req.files.file);
-  //     return res.status(200).send(result);
-  //   } catch (err) {
-  //     console.log(err.message);
-  //     return res.send('upload failed');
-  //   }
-  // };
+  // upload avatar
+  async uploadAvatar (req, res, next) {
+    let changes = {avatar: req.file.filename}
+    try {
+      let user = await req.app.services.users.updateUser(changes, req.user.id);
+      return res.status(200).send(user);
+    } catch (err) {
+      return Errors.generateUpdateError(res, `update`);
+    }
+  };
+
+  //get avatar
+  async getAvatar (req, res, next) {
+    try {
+      let readstream = await req.app.services.users.getAvatar(req.params.id);
+      return readstream.pipe(res);
+    } catch (err) {
+      return Errors.generateNotFoundError(res, `avatar`);
+    }
+  };
+
+  //delete avatar
+  async removeAvatar (req, res, next) {
+    try {
+      let gridStor = await req.app.services.users.removeAvatar(req.user.id);
+      return res.status(200).send('avatar successfully deleted');
+    } catch (err) {
+      console.log(err)
+      return Errors.generateDeleteError(res, `update`);
+    }
+  };
 
   //delete user
   async deleteUser (req, res, next) {

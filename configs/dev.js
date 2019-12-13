@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 mongoose.set('useFindAndModify', false);
 
-mongoose.connect('mongodb://localhost:27017/beeweb_intern', {useNewUrlParser: true, useUnifiedTopology: true}, err => {
-// mongoose.connect('mongodb://beeweb_insterns:beeweb_insterns12345@ds059722.mlab.com:59722/beeweb_intern', {useNewUrlParser: true, useUnifiedTopology: true}, err => {
+mongoose.connect('mongodb://localhost:27017/beeweb_intern', {useNewUrlParser: true, useUnifiedTopology: true}, (err, db) => {
   if (err) {
     throw err;
   };

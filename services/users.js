@@ -1,7 +1,17 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import jwtConfigs from '../configs/jwt_configs';
-import fs from 'fs';
+
+import mongoose from "mongoose";
+import Grid from "gridfs-stream";
+const conn = mongoose.connection;
+Grid.mongo = mongoose.mongo;
+var gfs;
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
 
 
 export default class UserServices {
@@ -144,19 +154,29 @@ export default class UserServices {
    return this.updateUser({rating: firstArg / secondArg}, user_id);
  }
 
-  //upload avatar
-  // async upload (file) {
-  //   let fileName = file.fileName;
-  //   let content = fs.readFileSync(file.path);
-  //   if (!file) {
-  //     throw new Error();
-  //   };
-  //   console.log('content - ', file);
-  //
-  // };
+  // get avatar
+  async getAvatar (_id) {
+    let user = await this.models.users.findOne({_id});
+    let file = await gfs.files.findOne({filename: user.avatar});
+    if (!file) {
+      throw new Error('!file not found');
+    }
+      const readstream = gfs.createReadStream(file.filename);
+      return readstream;
+  };
+
+  async removeAvatar (_id) {
+    let user = await this.models.users.findOne({_id, deleted: null});
+    let gridStor = await gfs.remove({filename: user.avatar, root: 'uploads'});
+    let newUser = await this.models.users.findOneAndUpdate({_id, deleted: null}, {avatar: null}, {new: true});
+    if (!gridStor) {
+      throw new Error();
+    }
+    return gridStor;
+  };
 
   //delete user
-  async deleteUser(_id) {
+  async deleteUser (_id) {
       const benefits = await this.models.benefits.updateMany({}, {$pull: {users: _id}}, {new: true});
       const user = await this.models.users.findOneAndUpdate({_id: _id, deletedAt: null}, {deletedAt: Date.now()}, {new: true});
       if (!user) {

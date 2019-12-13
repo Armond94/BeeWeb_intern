@@ -10,8 +10,8 @@ const candidateSchema = new Schema({
   education: {type: String, required: true},
   selected: {type: String, default: false},
   deletedAt: {type: Date, default: null},
-  position: {type: Schema.Types.ObjectId, ref: 'positions'}
-  // cv: {type: Buffer, required: true}
+  position: {type: Schema.Types.ObjectId, ref: 'positions'},
+  cv: {type: String, default: null}
 },
 {
   timestamps: {createdAt: 'created_at'}

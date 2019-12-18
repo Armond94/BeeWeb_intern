@@ -110,7 +110,7 @@ export default class UserServices {
     return {TOKEN, REFRESH_TOKEN};
   };
 
-  //change user
+  //update user
   async updateUser (changes, _id) {
       if (changes.password) {
         const salt = bcrypt.genSaltSync(10);
@@ -122,6 +122,15 @@ export default class UserServices {
       }
       user.password = null;
       return user;
+  };
+
+  // logout
+  async logout (_id, token) {
+    let user = await this.updateUser({_id, deletedAt: null}, {$pull: {notification_tokens: token}}, {new: true});
+    if (!user) {
+      throw new Error('!log out failed');
+    }
+    return user;
   };
 
   // chek and create rating object
@@ -151,7 +160,7 @@ export default class UserServices {
    let firstArg = Object.keys(object).reduce((res, el) => res + el * object[el], 0);
    let secondArg = Object.values(object).reduce((sum, el) => sum + el, 0);
 
-   return this.updateUser({rating: firstArg / secondArg}, user_id);
+   return await this.updateUser({rating: firstArg / secondArg}, user_id);
  }
 
   // get avatar

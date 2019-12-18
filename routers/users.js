@@ -65,6 +65,12 @@ router.post('/register', auth.checkToken, validation.checkForRegister, checkPerm
 // signin
 router.post('/login', validation.checkForLogin, controller.login);
 
+// allow notification
+router.post('/notification/token/:id', auth.checkToken, controller.updateUser);
+
+// logout
+router.post('/logout/:id', auth.checkToken, controller.logout);
+
 // refresh token
 router.post('/token', auth.checkRefreshToken, controller.refreshToken);
 

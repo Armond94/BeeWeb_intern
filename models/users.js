@@ -14,7 +14,8 @@ const userSchema = new Schema({
   deletedAt: {type: Date, default: null},
   dayOff: {type: Number, default: 0},
   rating: {type: Number, default: 0},
-  tickets: [{type: Schema.Types.ObjectId, ref: 'tickets'}]
+  tickets: [{type: Schema.Types.ObjectId, ref: 'tickets'}],
+  notification_tokens: [{type: String}]
 },
 {
   timestamps: {createdAt: 'created_at'}

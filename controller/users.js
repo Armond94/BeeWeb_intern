@@ -98,6 +98,16 @@ export default class UsersController {
     }
   };
 
+  // logout
+  async logout (req, res, next) {
+    try {
+      let user = await req.app.services.users.logout(req.params.id, req.body.token);
+      return res.status(200).send('logged out');
+    } catch (err) {
+      return res.send(err.message);
+    }
+  };
+
   //rate user
   async rateUser (req, res, next) {
     try {
@@ -136,7 +146,6 @@ export default class UsersController {
       let gridStor = await req.app.services.users.removeAvatar(req.user.id);
       return res.status(200).send('avatar successfully deleted');
     } catch (err) {
-      console.log(err)
       return Errors.generateDeleteError(res, `update`);
     }
   };

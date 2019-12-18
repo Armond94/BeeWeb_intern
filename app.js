@@ -12,6 +12,7 @@ import cors from 'cors';
 const app = express();
 app.errors = new Errors();
 app.use(cors());
+
 import methodOverride from 'method-override';
 
 
@@ -74,6 +75,12 @@ app.services = {
 app.use((req, res, next) => {
   req.app = app;
   next();
+});
+
+//test notification request
+app.post('/console', (req, res) => {
+  console.log('55555555');
+  res.send('555555');
 });
 
 //test endpoint for homepage

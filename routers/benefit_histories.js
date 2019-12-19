@@ -9,19 +9,19 @@ const validation = new Validations();
 const checkPermission = new CheckPermission();
 const controller = new BenefitHistoriesController();
 
-//find benefit history
+// find benefit history
 router.get('/:id', auth.checkToken, checkPermission.isAdmin, controller.getBenefitHistory);
 
-//find benefit histories
+// find benefit histories
 router.get('', auth.checkToken, checkPermission.isAdmin, controller.getBenefitHistories);
 
-//create benefit history (give benefit to user)
+// create benefit history (give benefit to user)
 router.post('/user', auth.checkToken, validation.checkBenefitHistory, checkPermission.isAdmin, controller.createBenefitHistory);
 
-//change benefit history
+// change benefit history
 router.put('/:id',auth.checkToken, checkPermission.isAdmin, controller.updateBenefitHistory);
 
-//delete benefit history
+// delete benefit history
 router.delete('/:id', auth.checkToken, checkPermission.isAdmin, controller.deleteBenefitHistory);
 
 export default router;

@@ -77,11 +77,6 @@ app.use((req, res, next) => {
   next();
 });
 
-//test notification request
-app.post('/console', (req, res) => {
-  console.log('55555555');
-  res.send('555555');
-});
 
 //test endpoint for homepage
 app.get('/', (req, res) => {

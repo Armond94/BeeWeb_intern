@@ -35,8 +35,7 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-// upload avatar // /image/upload/:userId
-router.post('/image/upload', auth.checkToken, upload.single('file'), controller.uploadAvatar);
+
 
 //get user avatar /image/avatar/:userId
 router.get('/image/avatar/:id', auth.checkToken, controller.getAvatar);
@@ -73,6 +72,9 @@ router.post('/logout/:id', auth.checkToken, controller.logout);
 
 // refresh token
 router.post('/token', auth.checkRefreshToken, controller.refreshToken);
+
+// upload avatar // /image/upload/:userId
+router.post('/image/upload', auth.checkToken, upload.single('file'), controller.uploadAvatar);
 
 // change user
 router.put('/:id', auth.checkToken, checkPermission.chekUpdateStaff, controller.updateUser);

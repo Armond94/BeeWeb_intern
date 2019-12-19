@@ -80,7 +80,7 @@ app.use((req, res, next) => {
 
 //test endpoint for homepage
 app.get('/', (req, res) => {
-  res.send('beeWeb-hr-service');
+  res.send('beeWeb-hr-service2');
 });
 
 //routers

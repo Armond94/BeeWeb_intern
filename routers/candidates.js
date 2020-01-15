@@ -53,7 +53,6 @@ router.post('', upload.single('file'), controller.createCandidate);//validation.
 //change candidate
 router.put('/:id', auth.checkToken, checkPermission.isAdmin, controller.changeCandidate);
 
-
 //delete candidate
 router.delete('/:id', auth.checkToken, checkPermission.isAdmin, controller.deleteCandidate);
 

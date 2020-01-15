@@ -1,18 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import jwtConfigs from '../configs/jwt_configs';
-
 import mongoose from "mongoose";
-import Grid from "gridfs-stream";
-const conn = mongoose.connection;
-Grid.mongo = mongoose.mongo;
-var gfs;
-conn.once("open", () => {
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-
-
 
 export default class UserServices {
   constructor (models, app) {
@@ -20,13 +9,12 @@ export default class UserServices {
     this.app = app;
   };
 
-
   //find user by id
   async getUser (_id) {
     let user = await this.models.users.findOne({_id: _id, deletedAt: null}, {password: 0})
       .populate('tickets');
     if (!user) {
-      throw new Error();
+      throw new Error('User not found.');
     }
     return user;
   };
@@ -165,23 +153,29 @@ export default class UserServices {
 
   // get avatar
   async getAvatar (_id) {
-    let user = await this.models.users.findOne({_id});
-    let file = await gfs.files.findOne({filename: user.avatar});
-    if (!file) {
-      throw new Error('!file not found');
+    let user = await this.models.users.findOne({_id}, {avatar: 1});
+
+    if (!user) {
+      throw new Error('User not found.');
     }
-      const readstream = gfs.createReadStream(file.filename);
-      return readstream;
+
+    return this.app.services.upload.getFile(user.avatar);
   };
 
   async removeAvatar (_id) {
-    let user = await this.models.users.findOne({_id, deleted: null});
-    let gridStor = await gfs.remove({filename: user.avatar, root: 'uploads'});
-    let newUser = await this.models.users.findOneAndUpdate({_id, deleted: null}, {avatar: null}, {new: true});
-    if (!gridStor) {
-      throw new Error();
+    let user = await this.models.users.findOne({_id, deleted: null}, {avatar: 1});
+
+    if (!user) {
+      throw new Error('User not found.');
     }
-    return gridStor;
+
+    let result = await this.app.services.upload.removeFile(user.avatar);
+
+    if (!result) {
+      throw new Error('Remove avatar error.');
+    }
+
+    await this.models.users.findOneAndUpdate({_id, deleted: null}, {avatar: null}, {new: true});
   };
 
   //delete user

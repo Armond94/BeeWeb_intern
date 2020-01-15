@@ -28,28 +28,21 @@ export default class CandidatesController {
   //create candidate
   async createCandidate (req, res, next) {
     let candidateObject = {...req.body};
-    candidateObject.cv = req.file.filename;
-    console.log('candidates controller candidateObject - ', candidateObject);
-    console.log('candidates controller req.file.filename - ', req.file.filename);
-    console.log('candidates controller candidateObject.cv - ', candidateObject.cv);
+    // candidateObject.cv = req.file.filename;
     try {
       let candidate = await req.app.services.candidates.createCandidate(candidateObject);
       return res.status(200).send(candidate);
     } catch (err) {
-      console.log('candidates controller create candidate err - ', err);
       return Errors.generateCreateError(res, `candidate`);
     }
   };
 
-
   //get cv
   async getCV (req, res, next) {
     try {
-      console.log('candidates controller getCV');
       let readstream = await req.app.services.candidates.getCV(req.params.id);
       return readstream.pipe(res);
     } catch (err) {
-      console.log('candidates controller get cv err - ', err);
       return Errors.generateNotFoundError(res, `cv`);
     }
   };
@@ -60,11 +53,9 @@ export default class CandidatesController {
       let gridStor = await req.app.services.candidates.removeCV(req.params.id);
       return res.status(200).send('cv successfully deleted');
     } catch (err) {
-      console.log('candidates controller removeCV err - ', err);
       return Errors.generateDeleteError(res, `update`);
     }
   };
-
 
   //change candidate
   async changeCandidate (req, res, next) {

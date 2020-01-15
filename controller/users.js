@@ -143,7 +143,7 @@ export default class UsersController {
   //delete avatar
   async removeAvatar (req, res, next) {
     try {
-      let gridStor = await req.app.services.users.removeAvatar(req.user.id);
+      await req.app.services.users.removeAvatar(req.user.id);
       return res.status(200).send('avatar successfully deleted');
     } catch (err) {
       return Errors.generateDeleteError(res, `update`);

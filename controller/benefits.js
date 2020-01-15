@@ -1,7 +1,6 @@
 import Errors from '../errors';
 import Queries from '../helpers/generateQuery';
 
-
 export default class BenefitsController {
 
   //find benefit
@@ -54,7 +53,6 @@ export default class BenefitsController {
       let benefit = await req.app.services.benefits.deleteBenefit(req.params.id);
       return res.status(200).send(benefit);
     } catch (err) {
-      console.log(err.message);
       return Errors.generateDeleteError(res, `benefit`);
     }
   };

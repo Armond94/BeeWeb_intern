@@ -34,7 +34,7 @@ router.get('/benefits/exists', auth.checkToken, checkPermission.isAdmin, control
 router.get('/benefits/:id', auth.checkToken, controller.userBenefits);
 
 // signup
-router.post('/register', validation.checkForRegister, auth.checkToken, checkPermission.isAdmin, controller.register); 
+router.post('/register', auth.checkToken, checkPermission.isAdmin, validation.checkForRegister, controller.register); 
 
 // signin
 router.post('/login', validation.checkForLogin, controller.login);

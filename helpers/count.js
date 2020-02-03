@@ -5,9 +5,8 @@ export default class  Count {
   }
 
   async countUsers (query) {
-    let count = await this.models.users.countDocuments(query);
-    return count;
-  };
+    return this.models.users.countDocuments(query);
+  }
 
   async countBenefits (query) {
     let count = await this.models.benefits.countDocuments(query);
@@ -33,5 +32,5 @@ export default class  Count {
     let count = await this.models.benefit_histories.countDocuments(query);
     return count;
   };
-  
+
 };

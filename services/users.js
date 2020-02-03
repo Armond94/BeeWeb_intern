@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import jwtConfigs from '../configs/jwt_configs';
 import mongoose from "mongoose";
+import {DEFAULT_LIMIT, DEFAULT_OFFSET} from '../configs/constants';
 
 export default class UserServices {
   constructor (models, app) {
@@ -17,11 +18,11 @@ export default class UserServices {
       throw new Error('User not found.');
     }
     return user;
-  };
+  }
 
   //find users
-  async getUsers (query) {
-    let users = await this.models.users.find(query.search, {password: 0}).limit(parseInt(query.limit)).skip(parseInt(query.offset))
+  async getUsers (query, limit = DEFAULT_LIMIT, offset = DEFAULT_OFFSET) {
+    let users = await this.models.users.find(query, {password: 0}).limit(limit).skip(offset)
       .populate('tickets');
     if (!users || users.length === 0) {
       throw new Error();
@@ -60,7 +61,7 @@ export default class UserServices {
 
       let newUser = new this.models.users(userObject);
       return await newUser.save();
-  };
+  }
 
   //signin
   async login (email, password) {
@@ -82,7 +83,7 @@ export default class UserServices {
         return resolve({user, token, refreshToken});
       });
     });
-  };
+  }
 
   //refresh token
   async refreshToken (refreshToken, email) {
@@ -96,7 +97,7 @@ export default class UserServices {
     const TOKEN = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || jwtConfigs.key, { expiresIn: jwtConfigs.tokenLife});
     const REFRESH_TOKEN = jwt.sign({email: email, userId: user._id}, process.env.REFRESH_TOKEN_KEY || jwtConfigs.refreshTokenKey, { expiresIn: jwtConfigs.refreshTokenLife});
     return {TOKEN, REFRESH_TOKEN};
-  };
+  }
 
   //update user
   async updateUser (changes, _id) {
@@ -110,7 +111,7 @@ export default class UserServices {
       }
       user.password = null;
       return user;
-  };
+  }
 
   // logout
   async logout (_id, token) {
@@ -119,7 +120,7 @@ export default class UserServices {
       throw new Error('!log out failed');
     }
     return user;
-  };
+  }
 
   // chek and create rating object
   async rate (rating, user_id, admin_id) {
@@ -132,7 +133,7 @@ export default class UserServices {
 
     let newRating = new this.models.ratings({user_id, admin_id, rating});
     return newRating.save();
- };
+ }
 
  // count average rate and update user
  async updateUserRating (user_id) {
@@ -160,7 +161,7 @@ export default class UserServices {
     }
 
     return this.app.services.upload.getFile(user.avatar);
-  };
+  }
 
   async removeAvatar (_id) {
     let user = await this.models.users.findOne({_id, deleted: null}, {avatar: 1});
@@ -176,7 +177,7 @@ export default class UserServices {
     }
 
     await this.models.users.findOneAndUpdate({_id, deleted: null}, {avatar: null}, {new: true});
-  };
+  }
 
   //delete user
   async deleteUser (_id) {
@@ -187,5 +188,5 @@ export default class UserServices {
       }
       user.password = null;
       return user;
-    };
+    }
 };

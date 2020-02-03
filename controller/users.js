@@ -25,10 +25,10 @@ export default class UsersController {
 
   //find users
   async getUsers (req, res, next) {
-    let query = Queries.generateUserQuery(req);
-    let count = await req.app.services.count.countUsers(query.search);
+    let { query, limit, offset } = Queries.generateUserQuery(req);
+    let count = await req.app.services.count.countUsers(query);
     try {
-      let users = await req.app.services.users.getUsers(query);
+      let users = await req.app.services.users.getUsers(query, limit, offset);
       return res.status(200).send({users, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `user`);

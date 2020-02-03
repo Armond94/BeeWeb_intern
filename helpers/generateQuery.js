@@ -1,22 +1,26 @@
-import {DEFAULT_LIMIT, DEFAULT_OFFSET} from '../configs/constants';
-
 export default class GenerateQuery {
 
-  //user search by age,
+  //search user by age, email or firstName,
   static generateUserQuery (req) {
-    let query = {
-      limit: req.query.limit || DEFAULT_LIMIT,
-      offset: req.query.offset || DEFAULT_OFFSET,
-      search: {deletedAt: null}
-    }
+    let query = { deletedAt: null };
+    const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+    const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
 
     if (req.query.age && req.query.from && req.query.to) {
       let from = `${new Date().getFullYear()-req.query.to}-${new Date().getMonth()+1}-${new Date().getDate()}`;
       let to = `${new Date().getFullYear()-req.query.from}-${new Date().getMonth()+1}-${new Date().getDate()}`;
-      query.search = {deletedAt: null, birthday: {$gte: from, $lte: to}};
+      query.birthday = {$gte: from, $lte: to};
     }
-    return query;
-  };
+
+    if (req.query.firstName) {
+      query.firstName = req.query.firstName;
+    }
+
+    if (req.query.email) {
+      query.email = req.query.email;
+    }
+    return { query, limit, offset };
+  }
 
   //search by title
   static generateBenefitQuery (req) {
@@ -30,7 +34,7 @@ export default class GenerateQuery {
       query.search = {title: req.query.title, deletedAt: null}
     }
     return query;
-  };
+  }
 
   // search by created_at
   static generateBenefitHistoryQuery (req) {
@@ -44,7 +48,7 @@ export default class GenerateQuery {
       query.search = {deletedAt: null, created_at: {$gte: req.query.from, $lte: req.query.to}};
     }
     return query;
-  };
+  }
 
   static generateCandidateQuery (req) {
     let query = {
@@ -57,7 +61,7 @@ export default class GenerateQuery {
       query.search = {deletedAt: null, selected: req.query.selected}
     }
     return query;
-  };
+  }
 
   static generatePositionQuery (req) {
     let query = {
@@ -74,7 +78,7 @@ export default class GenerateQuery {
       query.search = {deletedAt: null, deadline: {$gte: req.query.from, $lte: req.query.to}};
     }
     return query;
-  };
+  }
 
   static generateTicketQuery (req) {
     let query = {
@@ -87,7 +91,7 @@ export default class GenerateQuery {
       query.search = {deletedAt: null, confirmed: true};
     }
     return query;
-  };
+  }
 
   static generateBenefitHistoriesQuery (req) {
     let query = {
@@ -96,6 +100,6 @@ export default class GenerateQuery {
       search: {deletedAt: null}
     };
     return query;
-  };
+  }
 
 };

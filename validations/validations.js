@@ -1,4 +1,4 @@
-let registerationFields = ['firstName', 'lastName', 'email', 'role', 'birthday', 'phoneNumber', 'password', 'repeatPassword'];
+let registerationFields = ['firstName', 'lastName', 'email', 'role', 'birthday', 'phoneNumber', 'password', 'position', 'repeatPassword'];
 let loginFields = ['email', 'password'];
 let benefitFields = ['title', 'description'];
 let positionFields = ['title', 'description', 'type', 'required_qualifications', 'deadline'];

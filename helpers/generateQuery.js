@@ -1,3 +1,5 @@
+import {DEFAULT_LIMIT, DEFAULT_OFFSET} from '../configs/constants';
+
 export default class GenerateQuery {
 
   //search user by age, email or firstName,

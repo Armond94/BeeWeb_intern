@@ -6,7 +6,7 @@ export default class PositionsController {
   //find position
   async getPosition (req, res, next) {
     try {
-      let position = await req.app.services.positions.getPostition(req.params.id);
+      let position = await req.app.services.positions.getPosition(req.params.id);
       return res.status(200).send(position);
     } catch (err) {
       return Errors.generateNotFoundError(res, `position`);
@@ -18,7 +18,7 @@ export default class PositionsController {
     let query = Queries.generatePositionQuery(req);
     try {
       let count = await req.app.services.count.countPositions(query.search);
-      let positions = await req.app.services.positions.getPostitions(query);
+      let positions = await req.app.services.positions.getPositions(query);
       return res.status(200).send({positions, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `position`);

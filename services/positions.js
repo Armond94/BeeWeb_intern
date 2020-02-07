@@ -1,3 +1,5 @@
+import {DEFAULT_LIMIT, DEFAULT_OFFSET} from '../configs/constants';
+
 class PositionServices {
   constructor (models, app) {
     this.models = models;
@@ -5,7 +7,7 @@ class PositionServices {
   };
 
   //find and return position
-  async getPostition (_id) {
+  async getPosition (_id) {
     let position = await this.models.positions.findOne({_id: _id, deletedAt: null})
       .populate('candidates');
     if (!position) {
@@ -15,8 +17,8 @@ class PositionServices {
   };
 
   //find and return positions
-  async getPostitions (query) {
-    let positions = await this.models.positions.find(query.search).limit(parseInt(query.limit)).skip(parseInt(query.offset))
+  async getPositions (query, limit = DEFAULT_LIMIT, offset = DEFAULT_OFFSET) {
+    let positions = await this.models.positions.find(query).limit(parseInt(limit)).skip(parseInt(offset))
       .populate('candidates');
     if (!positions || positions.length === 0) {
       throw new Error();

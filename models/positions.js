@@ -6,7 +6,7 @@ const positionSchema = new Schema({
   description: {type: String, required: true},
   type: {type: String, required: true},
   required_qualifications: {type: String, required: true},
-  deadline: {type: String, default: null},
+  deadline: {type: String, required: true},
   candidates: [{type: Schema.ObjectId, ref: 'candidates'}],
   deletedAt: {type: Date, default: null}
 },

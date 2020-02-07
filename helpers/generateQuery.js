@@ -66,20 +66,20 @@ export default class GenerateQuery {
   }
 
   static generatePositionQuery (req) {
-    let query = {
-      limit: req.query.limit || DEFAULT_LIMIT,
-      offset: req.query.offset || DEFAULT_OFFSET,
-      search: {deletedAt: null}
-    };
+    let query = { deletedAt: null }; 
+    let limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+    let offset = req.query.offset ? parseInt(req.query.offset) : undefined;
 
     if (req.query.title) {
-      query.search = {deletedAt: null, title: req.query.title}
+      query.title = req.query.title
     }
 
     if (req.query.deadline && req.query.from && req.query.to) {
-      query.search = {deletedAt: null, deadline: {$gte: req.query.from, $lte: req.query.to}};
+      query.deadline = req.query.deadline;
+      query.from = req.query.from;
+      query.to = req.query.to;
     }
-    return query;
+    return {query, limit, offset};
   }
 
   static generateTicketQuery (req) {

@@ -15,10 +15,10 @@ export default class PositionsController {
 
   //find positions
   async getPositions (req, res, next) {
-    let query = Queries.generatePositionQuery(req);
+    let { query, limit, offset } = Queries.generatePositionQuery(req);
     try {
       let count = await req.app.services.count.countPositions(query.search);
-      let positions = await req.app.services.positions.getPositions(query);
+      let positions = await req.app.services.positions.getPositions(query, limit, offset);
       return res.status(200).send({positions, count});
     } catch (err) {
       return Errors.generateNotFoundError(res, `position`);

@@ -48,7 +48,9 @@ class CandidateServices {
   async createCandidate (candidateObject) {
     const newCandidate = new this.models.candidates(candidateObject);
     let candidate = await newCandidate.save();
+    console.log('2222222222222');
     let position = await this.models.positions.findOneAndUpdate({_id: candidateObject.position, deletedAt: null}, {$addToSet: {candidates: candidate._id}}, {new: true});
+    console.log('candidate - ', candidate, 'position - ', position);
     if (!candidate || !position) {
       throw new Error();
     }

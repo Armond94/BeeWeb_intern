@@ -33,6 +33,7 @@ export default class CandidatesController {
       let candidate = await req.app.services.candidates.createCandidate(candidateObject);
       return res.status(200).send(candidate);
     } catch (err) {
+      console.log('err.message - ', err.message);
       return Errors.generateCreateError(res, `candidate`);
     }
   };

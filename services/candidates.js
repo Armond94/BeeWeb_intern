@@ -17,7 +17,7 @@ class CandidateServices {
   //find candidate by id
   async getCandidate (_id) {
     let candidate = await this.models.candidates.findOne({_id: _id, deletedAt: null})
-      populate('position');
+      .populate('positions');
     if (!candidate) {
       throw new Error();
     }

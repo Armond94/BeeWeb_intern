@@ -86,17 +86,17 @@ export default class UserServices {
   }
 
   //refresh token
-  async refreshToken (refreshToken, email) {
+  async refreshToken (refresh_token, email) {
     let user = await this.models.users.findOne({email: email, deletedAt: null});
     if (!user) {
       throw new Error();
     }
-    if(!refreshToken) {
+    if(!refresh_token) {
       throw new Error();
     }
-    const TOKEN = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || jwtConfigs.key, { expiresIn: jwtConfigs.tokenLife});
-    const REFRESH_TOKEN = jwt.sign({email: email, userId: user._id}, process.env.REFRESH_TOKEN_KEY || jwtConfigs.refreshTokenKey, { expiresIn: jwtConfigs.refreshTokenLife});
-    return {TOKEN, REFRESH_TOKEN};
+    const token = jwt.sign({email: email, userId: user._id}, process.env.JWT_KEY || jwtConfigs.key, { expiresIn: jwtConfigs.tokenLife});
+    const refreshToken = jwt.sign({email: email, userId: user._id}, process.env.REFRESH_TOKEN_KEY || jwtConfigs.refreshTokenKey, { expiresIn: jwtConfigs.refreshTokenLife});
+    return { token, refreshToken };
   }
 
   //update user

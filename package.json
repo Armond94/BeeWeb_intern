@@ -27,7 +27,7 @@
     "swagger-jsdoc": "^3.4.0",
     "swagger-ui-express": "^4.1.2",
     "websocket": "^1.0.31",
-    "ws": "^7.2.1"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
